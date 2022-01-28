@@ -34,6 +34,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  page_transition: ^2.0.4
+  font_awesome_flutter: ^9.2.0
+  flutter_tabler_icons: ^1.1.1
+  animated_theme_switcher: ^2.0.6
+  flutter_svg: any
+  cool_dropdown: ^1.4.1
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +62,30 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  fonts:
+   - family: Museo
+     fonts: 
+      - asset: lib/assets/MuseoSansCyrl-500.otf
+
+  assets:
+      - lib/assets/images/eggs.png
+      - lib/assets/images/milk.png
+      - lib/assets/images/newspaper.png
+      - lib/assets/images/onion.png
+      - lib/assets/images/profile.png
+      - lib/assets/images/welcomeImage__01.jpg
+      - lib/assets/images/success.png
+      - lib/assets/images/fruitsbasket.png
+      - lib/assets/images/calendar.png
+      - lib/assets/images/icon3.png
+      - lib/assets/images/icon4.png
+      - lib/assets/images/eggIcon.png
+      - lib/assets/images/meat.png
+      - lib/assets/images/fruits.png
+      - lib/assets/images/tasks.png
+      - lib/assets/images/contacts.png
+      - lib/assets/images/milkBottle.png
+      - lib/assets/images/person.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
