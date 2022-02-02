@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
+import 'package:subs_vendor/api/UpdateBankDetailsApi.dart';
 import 'package:subs_vendor/widgets/CommonTextField.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 
@@ -17,6 +18,10 @@ class BankDetailScreen extends StatefulWidget {
 }
 
 class _BankDetailScreenState extends State<BankDetailScreen> {
+  final accountHolderNameController = TextEditingController();
+  final accountNoController = TextEditingController();
+  final ifscCodeController = TextEditingController();
+  final upiController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     double defaultFontSize = 14;
@@ -47,7 +52,40 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
           SizedBox(
             height: 10,
           ),
-          commonTextField("Enter your Account Number", defaultFontSize),
+          Container(
+    height: 50,
+    child: TextField(
+      showCursor: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide:
+              const BorderSide(color: AppColors.tileSelectGreen, width: 0.5),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        filled: true,
+        fillColor: Colors.white,
+        hintStyle:
+            TextStyle(color: AppColors.iconGrey, fontSize: defaultFontSize),
+        hintText: "Enter your account number",
+      ),
+      controller: accountNoController,
+    ),
+  ),
           SizedBox(
             height: 10,
           ),
@@ -58,7 +96,40 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
           SizedBox(
             height: 10,
           ),
-         commonTextField("Enter Account Holder Name :", defaultFontSize),
+         Container(
+    height: 50,
+    child: TextField(
+      showCursor: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide:
+              const BorderSide(color: AppColors.tileSelectGreen, width: 0.5),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        filled: true,
+        fillColor: Colors.white,
+        hintStyle:
+            TextStyle(color: AppColors.iconGrey, fontSize: defaultFontSize),
+        hintText: "Enter account holder name:",
+      ),
+      controller: accountHolderNameController,
+    ),
+  ),
           SizedBox(
             height: 10,
           ),
@@ -68,8 +139,41 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
                   style: TextStyle(color: AppColors.iconGrey))),
           SizedBox(
             height: 10,
-          ),
-          commonTextField("Enter IFSC Code", defaultFontSize),
+          ),Container(
+    height: 50,
+    child: TextField(
+      showCursor: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide:
+              const BorderSide(color: AppColors.tileSelectGreen, width: 0.5),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        filled: true,
+        fillColor: Colors.white,
+        hintStyle:
+            TextStyle(color: AppColors.iconGrey, fontSize: defaultFontSize),
+        hintText: "Enter IFSC Code",
+      ),
+      controller: ifscCodeController,
+    ),
+  ),
+          
           SizedBox(
             height: 10,
           ),
@@ -84,9 +188,70 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
           SizedBox(
             height: 10,
           ),
-          commonTextField("Enter your UPI ID or Phone Number", defaultFontSize),
+          Container(
+    height: 50,
+    child: TextField(
+      showCursor: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide:
+              const BorderSide(color: AppColors.tileSelectGreen, width: 0.5),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        focusedErrorBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.tileSelectGreen),
+            borderRadius: BorderRadius.circular(15)),
+        filled: true,
+        fillColor: Colors.white,
+        hintStyle:
+            TextStyle(color: AppColors.iconGrey, fontSize: defaultFontSize),
+        hintText: "Enter Upi ID or Phone Number",
+      ),
+      controller: upiController,
+    ),
+  )
+          ,
           SizedBox(height: 180,),
-          ScreenSizeButton("Submit",context,HomeScreen.routeName),
+          Container(
+    width: double.infinity,
+    height: 50,
+    child: TextButton(
+        onPressed: () async {
+                      var response = await UpdateBankDetails.updateBank(
+                        accountNoController.text,
+                        accountHolderNameController.text,
+                        ifscCodeController.text,
+                        upiController.text
+                      );
+                      if (response == 200) {
+                        Navigator.pushNamed(context, HomeScreen.routeName);
+                      }
+                    },
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(AppColors.tileSelectGreen),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            )),
+        child: Text(
+          'Submit',
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        )),
+  ),
           ]
            ,
       )

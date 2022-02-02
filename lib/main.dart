@@ -1,11 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/screens/AddProdScreen.dart';
+import 'package:subs_vendor/screens/BankDetailsScreen.dart';
 import 'package:subs_vendor/screens/HomeScreen.dart';
+import 'package:subs_vendor/screens/SignUpOtpScreen.dart';
+import 'package:subs_vendor/screens/LoginScreen.dart';
+import 'package:subs_vendor/screens/SignUpScreen.dart';
+import 'package:subs_vendor/screens/UserInfoScreen.dart';
 import 'package:subs_vendor/screens/WelcomeScreen.dart';
 
 import 'Utils/Routes.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -21,9 +29,8 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Museo',
         primarySwatch: Colors.grey,
       ),
-      initialRoute: HomeScreen.routeName,
+      initialRoute: AddProdScreen.routeName,
       routes: routes,
     );
   }
 }
-

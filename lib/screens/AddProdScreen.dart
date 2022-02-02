@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
+import 'package:subs_vendor/api/AddProductApi.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
+import 'package:subs_vendor/screens/HomeScreen.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 
 class AddProdScreen extends StatefulWidget {
@@ -16,6 +18,8 @@ class AddProdScreen extends StatefulWidget {
 }
 
 class _AddProdScreenState extends State<AddProdScreen> {
+  final prodNameController = TextEditingController();
+  final priceController = TextEditingController();
   List dropdownItemCategoryList = [
     {'label': 'Milk', 'value': 'Milk'}, // label is required and unique
     {'label': 'Newspaper', 'value': 'Newspaper'},
@@ -23,6 +27,7 @@ class _AddProdScreenState extends State<AddProdScreen> {
     {'label': 'Grocery', 'value': 'Grocery'},
     {'label': 'Custom', 'value': 'Custom'},
   ];
+  var category = {'label': 'Milk', 'value': 'Milk'};
   List dropdownItemUnitList = [
     {'label': 'Kilogram', 'value': 'Kilogram'}, // label is required and unique
     {'label': 'Litre', 'value': 'Litre'},
@@ -30,14 +35,51 @@ class _AddProdScreenState extends State<AddProdScreen> {
     {'label': 'Packet', 'value': 'Packet'},
     {'label': 'Bottle', 'value': 'Bottle'},
   ];
+  var unit = {'label': 'Kilogram', 'value': 'Kilogram'};
   String dropdownValue = 'Daily';
+  @override
+  void initState() {
+    super.initState();
+    prodNameController.text = 'Toned Milk';
+    priceController.text = 'Rs. ';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: ScreenSizeButton("Add Product", context, blank.routeName),
+        child: Container(
+          width: double.infinity,
+          height: 50,
+          child: TextButton(
+              onPressed: ()  async {
+                print(category['value']);
+                print(unit['value']);
+                      var response = await AddProductApi.addProduct(
+                        category['value'].toString(),
+                        priceController.text,
+                        prodNameController.text,
+                        unit['value'].toString()
+                      );
+                      if (response == 200) {
+                        Navigator.pushNamed(context, HomeScreen.routeName);
+                      }
+              },
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(AppColors.tileSelectGreen),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  )),
+              child: Text(
+                'Add Product',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
+        ),
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
@@ -59,38 +101,6 @@ class _AddProdScreenState extends State<AddProdScreen> {
         physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.all(15),
         children: [
-          SizedBox(
-            height: 10,
-          ),
-          Center(
-            child: Text(
-              "Product Image",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Center(
-            child: Container(
-              height: 120,
-              width: 120,
-              child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(
-                    Icons.add_a_photo_outlined,
-                    color: AppColors.iconGrey,
-                  )),
-              decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.iconGrey),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-            ),
-          ),
           SizedBox(
             height: 15,
           ),
@@ -118,7 +128,9 @@ class _AddProdScreenState extends State<AddProdScreen> {
                 dropdownList: dropdownItemCategoryList,
                 dropdownItemTopGap: 5,
                 dropdownItemBottomGap: 5,
-                onChange: (a) {},
+                onChange: (a) {
+                  category = a;
+                },
                 resultBD: BoxDecoration(
                     border: Border.all(width: 1, color: AppColors.iconGrey),
                     borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -172,12 +184,10 @@ class _AddProdScreenState extends State<AddProdScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
-                    child: Text(
-                      "Toned Milk",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400),
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      controller: prodNameController,
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
                 ),
@@ -204,12 +214,10 @@ class _AddProdScreenState extends State<AddProdScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
-                    child: Text(
-                      "Rs.82",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400),
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      controller: priceController,
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
                 ),
@@ -233,7 +241,9 @@ class _AddProdScreenState extends State<AddProdScreen> {
                 dropdownList: dropdownItemUnitList,
                 dropdownItemTopGap: 5,
                 dropdownItemBottomGap: 5,
-                onChange: () {},
+                onChange: (a) {
+                  unit = a;
+                },
                 resultBD: BoxDecoration(
                     border: Border.all(width: 1, color: AppColors.iconGrey),
                     borderRadius: BorderRadius.all(Radius.circular(10))),

@@ -1,7 +1,14 @@
 // ignore_for_file: file_names, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'dart:io';
+import 'dart:math';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
+import 'package:subs_vendor/api/UpdateProfileApi.dart';
 import 'package:subs_vendor/screens/HomeScreen.dart';
 import 'package:subs_vendor/widgets/CommonTextField.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
@@ -10,6 +17,7 @@ import 'BankDetailsScreen.dart';
 
 class ProfilePage extends StatefulWidget {
   static String routeName = "/userInfo";
+
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
@@ -17,6 +25,18 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String type = 'vendor';
+  String shopname = 'none';
+  final nameController = TextEditingController();
+  final shopController = TextEditingController();
+  final emailController = TextEditingController();
+  final addressController = TextEditingController();
+  final pincodeController = TextEditingController();
+  List<String> Images = [
+    'lib/assets/images/profile1.png',
+    'lib/assets/images/profile2.png',
+    'lib/assets/images/profile3.png'
+  ];
   @override
   Widget build(BuildContext context) {
     double defaultFontSize = 14;
@@ -24,9 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
     double picSize = 60;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: ListView
-      (
-        children: [
+      body: ListView(children: [
         Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.center,
@@ -46,82 +64,386 @@ class _ProfilePageState extends State<ProfilePage> {
               style: TextStyle(fontSize: 18),
             ),
             Positioned(
-              top: ContainerSize - picSize,
-              child: CircleAvatar(
-                radius: picSize,
-                child: Image.asset("lib/assets/images/profile.png"),
-              ),
-            )
+                top: ContainerSize - picSize,
+                child: Container(
+                  child: ClipOval(
+                    child: Image.asset(
+                      Images[Random().nextInt(Images.length)],
+                      height: picSize * 2,
+                      width: picSize * 2,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2.0,
+                    ),
+                  ),
+                )),
+            Positioned(
+                top: ContainerSize + 20,
+                left: 200,
+                child: RawMaterialButton(
+                  onPressed: () {},
+                  elevation: 2.0,
+                  fillColor: Color(0xFFF5F6F9),
+                  child: Icon(
+                    Icons.add_a_photo,
+                    color: Colors.black,
+                  ),
+                  padding: EdgeInsets.all(10.0),
+                  shape: CircleBorder(),
+                ))
           ],
         ),
         SizedBox(
           height: 55,
         ),
         ListView(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.all(10), 
-          children: [
-          Align(
-              alignment: Alignment.centerLeft,
-              child:
-                  Text("Name", style: TextStyle(color: AppColors.iconGrey))),
-          SizedBox(
-            height: 10,
-          ),
-         commonTextField("Enter your Name", defaultFontSize),
-         SizedBox(
-            height: 10,
-          ),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Phone Number",
-                  style: TextStyle(color: AppColors.iconGrey))),
-          SizedBox(
-            height: 10,
-          ),
-         commonTextField("Enter your Phone Number", defaultFontSize),
-         SizedBox(
-            height: 10,
-          ),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Text("Email-ID",
-                  style: TextStyle(color: AppColors.iconGrey))),
-          SizedBox(
-            height: 10,
-          ),
-         commonTextField("Enter your Email-ID", defaultFontSize), SizedBox(
-            height: 10,
-          ),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Address",
-                style: TextStyle(color: AppColors.iconGrey),
-              )),
-          SizedBox(
-            height: 10,
-          ),
-         commonTextField("Enter your Address", defaultFontSize), SizedBox(
-            height: 10,
-          ),
-          Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Pincode",
-                style: TextStyle(color: AppColors.iconGrey),
-              )),
-          SizedBox(
-            height: 10,
-          ),
-         commonTextField("Enter your Pincode", defaultFontSize),
-         SizedBox(
-            height: 50,
-          ),
-          ScreenSizeButton("Proceed",context,BankDetailScreen.routeName)
-        ])
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.all(10),
+            children: [
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Name",
+                      style: TextStyle(color: AppColors.iconGrey))),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 50,
+                child: TextField(
+                  showCursor: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.tileSelectGreen, width: 0.5),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    errorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    disabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintStyle: TextStyle(
+                        color: AppColors.iconGrey, fontSize: defaultFontSize),
+                    hintText: "Enter your Name",
+                  ),
+                  textCapitalization: TextCapitalization.words,
+                  controller: nameController,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Email-ID",
+                      style: TextStyle(color: AppColors.iconGrey))),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 50,
+                child: TextField(
+                  showCursor: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.tileSelectGreen, width: 0.5),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    errorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    disabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintStyle: TextStyle(
+                        color: AppColors.iconGrey, fontSize: defaultFontSize),
+                    hintText: "Enter your Email-ID",
+                  ),
+                  controller: emailController,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Shop Name",
+                      style: TextStyle(color: AppColors.iconGrey))),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 50,
+                child: TextField(
+                  showCursor: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.tileSelectGreen, width: 0.5),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    errorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    disabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintStyle: TextStyle(
+                        color: AppColors.iconGrey, fontSize: defaultFontSize),
+                    hintText: "Enter your Shop Name",
+                  ),
+                  controller: shopController,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Address",
+                    style: TextStyle(color: AppColors.iconGrey),
+                  )),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 80,
+                child: TextField(
+                  showCursor: true,
+                  inputFormatters: [
+                    new LengthLimitingTextInputFormatter(36),
+
+                    /// here char limit is 5
+                  ],
+                  maxLines: 2,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.tileSelectGreen, width: 0.5),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    errorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    disabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintStyle: TextStyle(
+                        color: AppColors.iconGrey, fontSize: defaultFontSize),
+                    hintText: "Enter your address",
+                  ),
+                  controller: addressController,
+                  textCapitalization: TextCapitalization.sentences,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Pincode",
+                    style: TextStyle(color: AppColors.iconGrey),
+                  )),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 50,
+                child: TextField(
+                  showCursor: true,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: AppColors.tileSelectGreen, width: 0.5),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    errorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    focusedErrorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    disabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: AppColors.tileSelectGreen),
+                        borderRadius: BorderRadius.circular(15)),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintStyle: TextStyle(
+                        color: AppColors.iconGrey, fontSize: defaultFontSize),
+                    hintText: "Enter your pincode",
+                  ),
+                  controller: pincodeController,
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: TextButton(
+                    onPressed: () async {
+                      var response = await UpdateProfile.updateProfile(
+                          nameController.text,
+                          emailController.text,
+                          addressController.text,
+                          pincodeController.text,
+                          type,
+                          shopname);
+                      if (response == 200) {
+                        Navigator.pushNamed(
+                            context, BankDetailScreen.routeName);
+                      }
+                    },
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            AppColors.tileSelectGreen),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        )),
+                    child: Text(
+                      'Proceed',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    )),
+              )
+            ])
       ]),
     );
   }
 }
+
+/*  Future pickImage(ImageSource source) async {
+    try {
+      final image = await ImagePicker().pickImage(source: source);
+      if (image == null) return;
+      final imageTemp = File(image.path);
+      setState(() {
+        this.image = imageTemp;
+      });
+    } on Exception catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Failed to pick image $e'),
+        duration: Duration(seconds: 4),
+      ));
+    }
+  }
+
+  void showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: Wrap(
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.photo_library),
+                    title: Text('Photo Library'),
+                    onTap: () {
+                      pickImage(ImageSource.gallery);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.photo_camera),
+                    title: Text('Camera'),
+                    onTap: () {
+                      pickImage(ImageSource.camera);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+*/
