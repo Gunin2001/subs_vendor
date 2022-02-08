@@ -7,6 +7,7 @@ import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
 import 'package:subs_vendor/screens/HomeScreen.dart';
 import 'package:subs_vendor/screens/MyCustomers.dart';
+import 'package:subs_vendor/screens/SettingsScreen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({ Key? key }) : super(key: key);
@@ -82,6 +83,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
     HomeScreen.routeName,
     MyCustomerScreen.routeName,
     blank.routeName,
-    blank.routeName,
+    SettingsScreen.routeName,
   ];
 }

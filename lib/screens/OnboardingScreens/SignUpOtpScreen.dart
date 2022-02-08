@@ -3,7 +3,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
-import 'package:subs_vendor/screens/OTPcontrollerScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/OTPcontrollerScreen.dart';
 
 class SignUpOtpScreen extends StatefulWidget {
   const SignUpOtpScreen({Key? key}) : super(key: key);

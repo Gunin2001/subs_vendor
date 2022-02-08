@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, prefer_const_constructors
+// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -6,12 +6,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:subs_vendor/SharedPreferences_service.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/LoginApi.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
 import 'package:subs_vendor/screens/HomeScreen.dart';
-import 'package:subs_vendor/screens/SignUpOtpScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
+import 'package:subs_vendor/shared_preferences/login_preferences.dart';
+import 'package:subs_vendor/shared_preferences/token_preferences.dart';
 import 'package:subs_vendor/widgets/CommonTextField.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
-
-import 'SignUpScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = "/login";
@@ -21,10 +22,42 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  void initState() {
+    super.initState();
+    loginPreference = LoginPreference();
+    tokenPreference = TokenPreference();
+  }
+
+  _onSubmit() async {
+    setState(() {
+      _isLoading = true;
+    });
+    var response = await LoginApi.login(
+        usernameController.text, passwordController.text, widget.type);
+    if (response.statusCode == 200) {
+      tokenPreference.setTokenPreferenceData(response.data['data'].toString());
+      print(await tokenPreference.getTokenPreferenceData());
+      loginPreference?.setLoginStatus(true);
+      setState(() {
+        Navigator.pushNamed(context, HomeScreen.routeName);
+      });
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+      loginPreference?.setLoginStatus(false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Username or Password doesn't match"),
+        duration: Duration(seconds: 4),
+      ));
+    }
+  }
+
   final GlobalKey<FormState> _form = GlobalKey<FormState>();
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmController = TextEditingController();
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     double defaultFontSize = 14;
@@ -156,22 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 50,
                   child: TextButton(
                       onPressed: () async {
-                        var response = await LoginApi.login(
-                            usernameController.text,
-                            passwordController.text,
-                            widget.type);
-                        if (response == 200) {
-                          SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                          prefs.setString(
-                                'UserToken', response.data['data'].toString());
-                          Navigator.pushNamed(context, HomeScreen.routeName);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Username or Password doesn't match"),
-                            duration: Duration(seconds: 4),
-                          ));
-                        }
+                        await _onSubmit();
                       },
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(
@@ -181,10 +199,32 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           )),
-                      child: Text(
-                        'Login',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      )),
+                      child: _isLoading
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 30,
+                                  width: 30,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  "Please Wait...",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                )
+                              ],
+                            )
+                          : Text(
+                              'Login',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
+                            )),
                 ),
                 SizedBox(
                   height: 10,
@@ -213,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SignUpScreen(phone: "9999999999",)),
+                            builder: (context) => ChooseTypeScreen()),
                       )
                     },
                     child: Container(

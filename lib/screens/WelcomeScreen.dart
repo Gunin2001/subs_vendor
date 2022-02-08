@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
-import 'package:subs_vendor/screens/LoginScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/LoginScreen.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 
 class WelcomeScreen extends StatefulWidget {

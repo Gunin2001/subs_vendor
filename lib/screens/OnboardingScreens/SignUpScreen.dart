@@ -7,11 +7,12 @@ import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:subs_vendor/SharedPreferences_service.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
+import 'package:subs_vendor/api/SignUpapi.dart';
 import 'package:subs_vendor/screens/UserInfoScreen.dart';
+import 'package:subs_vendor/shared_preferences/login_preferences.dart';
+import 'package:subs_vendor/shared_preferences/token_preferences.dart';
 import 'package:subs_vendor/widgets/CommonTextField.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
-
-import '../api/SignUpapi.dart';
 import 'LoginScreen.dart';
 import 'SignUpScreen.dart';
 
@@ -30,11 +31,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final phonetxtController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     phonetxtController.text = widget.phone;
+  }
+
+  onSignUp() async {
+    if (_form.currentState!.validate() == true) {
+      setState(() {
+        _isLoading = true;
+      });
+      var response = await SignUp.signUp(
+          phonetxtController.text, passwordController.text, widget.type);
+
+      if (response.statusCode == 200) {
+        tokenPreference
+            .setTokenPreferenceData(response.data['data'].toString());
+        loginPreference?.setLoginStatus(true);
+        print(await tokenPreference.getTokenPreferenceData());
+        setState(() {
+          Navigator.pushNamed(context, ProfilePage.routeName);
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+        loginPreference?.setLoginStatus(false);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Number is already registered"),
+          duration: Duration(seconds: 4),
+        ));
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text("Password doesn't match"),
+        duration: Duration(seconds: 4),
+      ));
+    }
   }
 
   Widget build(BuildContext context) {
@@ -222,33 +258,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 50,
                   child: TextButton(
                       onPressed: () async {
-                        if (_form.currentState!.validate() == true) {
-                          var response = await SignUp.signUp(
-                              phonetxtController.text,
-                              passwordController.text,
-                              widget.type);
-
-                          if (response.statusCode == 200) {
-                            SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            prefs.setString('phone', phonetxtController.text);
-                            prefs.setString(
-                                'UserToken', response.data['data'].toString());
-                            print('${prefs.getString('UserToken')}');
-                            print('${prefs.getString('phone')}');
-                            Navigator.pushNamed(context, ProfilePage.routeName);
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Number is already registered"),
-                              duration: Duration(seconds: 4),
-                            ));
-                          }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text("Password doesn't match"),
-                            duration: Duration(seconds: 4),
-                          ));
-                        }
+                        await onSignUp();
                       },
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(

@@ -33,9 +33,26 @@ class _ProfilePageState extends State<ProfilePage> {
   final addressController = TextEditingController();
   final pincodeController = TextEditingController();
   List<String> Images = [
-    'lib/assets/images/profile1.png',
-    'lib/assets/images/profile2.png',
-    'lib/assets/images/profile3.png'
+    'lib/assets/images/Ellipse 13.png',
+'lib/assets/images/Ellipse 14.png',
+'lib/assets/images/Ellipse 15.png',
+'lib/assets/images/Ellipse 16.png',
+'lib/assets/images/Ellipse 17.png',
+'lib/assets/images/Ellipse 18.png',
+'lib/assets/images/Ellipse 19.png',
+'lib/assets/images/Ellipse 20.png',
+'lib/assets/images/Ellipse 21.png',
+'lib/assets/images/Ellipse 22.png',
+'lib/assets/images/Ellipse 23.png',
+'lib/assets/images/Ellipse 24.png',
+'lib/assets/images/Ellipse 25.png',
+'lib/assets/images/Ellipse 26.png',
+'lib/assets/images/Ellipse 27.png',
+'lib/assets/images/Ellipse 28.png',
+'lib/assets/images/Ellipse 29.png',
+'lib/assets/images/Ellipse 30.png',
+'lib/assets/images/Ellipse 31.png',
+'lib/assets/images/Ellipse 32.png',
   ];
   @override
   Widget build(BuildContext context) {
@@ -82,20 +99,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 )),
-            Positioned(
-                top: ContainerSize + 20,
-                left: 200,
-                child: RawMaterialButton(
-                  onPressed: () {},
-                  elevation: 2.0,
-                  fillColor: Color(0xFFF5F6F9),
-                  child: Icon(
-                    Icons.add_a_photo,
-                    color: Colors.black,
-                  ),
-                  padding: EdgeInsets.all(10.0),
-                  shape: CircleBorder(),
-                ))
           ],
         ),
         SizedBox(

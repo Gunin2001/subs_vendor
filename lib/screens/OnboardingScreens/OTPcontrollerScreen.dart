@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:subs_vendor/screens/HomeScreen.dart';
-import 'package:subs_vendor/screens/SignUpOtpScreen.dart';
-import 'package:subs_vendor/screens/SignUpScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/SignUpScreen.dart';
 
-import 'BlankTargetScreen.dart';
+import '../BlankTargetScreen.dart';
 
 class OtpControllerScreen extends StatefulWidget {
   static String routeName = '/otpController';
@@ -40,6 +40,7 @@ class _OtpControllerScreenState extends State<OtpControllerScreen> {
 
   sendOtpCode() async {
     print('otp sent');
+    print(widget.phone);
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: widget.phone,
       verificationCompleted: (PhoneAuthCredential credential) async {

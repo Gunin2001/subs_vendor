@@ -25,9 +25,9 @@ class LoginApi {
     print(response.data);
     if (response.statusCode == 200) {
       print(response.data);
-      return response.statusCode;
+      return response;
     } else if (response.statusCode == 400) {
-      return response.statusCode;
+      return response;
     } else {
       return null;
     }

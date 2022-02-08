@@ -1,69 +1,26 @@
-// ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
-// ignore_for_file: filetitles, prefer_const_constructors, prefer_const_literals_to_create_immutables, file_names
+// ignore_for_file: file_names, prefer_const_constructors
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
 import 'package:subs_vendor/widgets/Bottom_Navigation_Bar.dart';
-import 'package:subs_vendor/widgets/NavDrawer.dart';
-import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
-import 'package:subs_vendor/widgets/Search_Bar.dart';
 
-import 'AlertsScreen.dart';
-
-class MyCustomerScreen extends StatefulWidget {
-  static String routeName = "/mySubs";
-  const MyCustomerScreen({Key? key}) : super(key: key);
+class ApprovalsScreen extends StatefulWidget {
+  const ApprovalsScreen({ Key? key }) : super(key: key);
 
   @override
-  _MyCustomerScreenState createState() => _MyCustomerScreenState();
+  _ApprovalsScreenState createState() => _ApprovalsScreenState();
 }
 
-class _MyCustomerScreenState extends State<MyCustomerScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left:13,right:13,bottom: 5),
-        child: BottomNavBar(),
-      ),
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryGrey,
-        elevation: 0,
-        title: Text("Subscription App"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: AppColors.iconBlack,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, AlertsScreen.routeName);
-              })
-        ],
-      ),
-      body: MyCustomerScreenBody(),
-    );
-  }
-}
-class MyCustomerScreenBody extends StatefulWidget {
-  const MyCustomerScreenBody({Key? key}) : super(key: key);
-
-  @override
-  _MyCustomerScreenBodyState createState() => _MyCustomerScreenBodyState();
-}
-
-class _MyCustomerScreenBodyState extends State<MyCustomerScreenBody> {
+class _ApprovalsScreenState extends State<ApprovalsScreen> {
   @override
   Widget build(BuildContext context) {
     return ListView(
       padding: EdgeInsets.all(15),
       children: [
-        SearchBar(),
-        SizedBox(height:25.0),
+        SizedBox(height:10.0),
         Text("Your Customers",
         style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
         SizedBox(height:10.0),
@@ -180,7 +137,7 @@ Widget customerTile(String title, String interval, String prod, String price,
            children: [
              RichText(
                       text: TextSpan(
-                          text: "Request Payment",
+                          text: "Decline Request",
                           style: TextStyle(
                             color: Color.fromRGBO(74, 90, 152, 1),
                             decoration: TextDecoration.underline,
@@ -194,7 +151,7 @@ Widget customerTile(String title, String interval, String prod, String price,
                     ),
                     RichText(
                       text: TextSpan(
-                          text: "Mark Payment",
+                          text: "Accept Request",
                           style: TextStyle(
                             color: Color.fromRGBO(74, 90, 152, 1),
                             decoration: TextDecoration.underline,

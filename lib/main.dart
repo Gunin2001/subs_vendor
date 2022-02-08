@@ -1,11 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/screens/AddProdScreen.dart';
+import 'package:subs_vendor/screens/AlertsScreen.dart';
 import 'package:subs_vendor/screens/BankDetailsScreen.dart';
+import 'package:subs_vendor/screens/BlankTargetScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
+import 'package:subs_vendor/screens/CustomSubscription.dart';
+import 'package:subs_vendor/screens/EditProdScreen.dart';
 import 'package:subs_vendor/screens/HomeScreen.dart';
-import 'package:subs_vendor/screens/SignUpOtpScreen.dart';
-import 'package:subs_vendor/screens/LoginScreen.dart';
-import 'package:subs_vendor/screens/SignUpScreen.dart';
+import 'package:subs_vendor/screens/MyCustomers.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/LoginScreen.dart';
 import 'package:subs_vendor/screens/UserInfoScreen.dart';
 import 'package:subs_vendor/screens/WelcomeScreen.dart';
 
@@ -29,7 +35,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Museo',
         primarySwatch: Colors.grey,
       ),
-      initialRoute: AddProdScreen.routeName,
+      initialRoute: WelcomeScreen.routeName,
       routes: routes,
     );
   }

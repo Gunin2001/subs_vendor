@@ -35,6 +35,54 @@ class _EditProdScreenState extends State<EditProdScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 150,
+                      height: 50,
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, blank.routeName);
+                          },
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(AppColors.tileSelectGreen),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              )),
+                          child: Text(
+                            'Save',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          )),
+                      ),
+                      Container(
+                      width: 150,
+                      height: 50,
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, blank.routeName);
+                          },
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Color.fromRGBO(249, 138, 138, 1)),
+                              shape: MaterialStateProperty.all(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              )),
+                          child: Text(
+                            'Delete',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                          )),
+                      )
+                  ],
+                ),
+      ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       appBar: AppBar(
@@ -56,24 +104,6 @@ class _EditProdScreenState extends State<EditProdScreen> {
         children: [
           SizedBox(
             height: 10,
-          ),
-          Center(
-            child: Text(
-              "Product Image",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w400),
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-          Center(
-            child: Image.asset('lib/assets/images/milkBottle.png',height: 140,width: 140,),
-          ),
-          SizedBox(
-            height: 15,
           ),
           Center(
             child: Text(
@@ -250,51 +280,6 @@ class _EditProdScreenState extends State<EditProdScreen> {
               ],
           ),
           SizedBox(height: 130,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: 150,
-                    height: 50,
-                    child: TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, blank.routeName);
-                        },
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(AppColors.tileSelectGreen),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            )),
-                        child: Text(
-                          'Save',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        )),
-                    ),
-                    Container(
-                    width: 150,
-                    height: 50,
-                    child: TextButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, blank.routeName);
-                        },
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Color.fromRGBO(249, 138, 138, 1)),
-                            shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            )),
-                        child: Text(
-                          'Delete',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        )),
-                    )
-                ],
-              )
             
         ],
       ),
