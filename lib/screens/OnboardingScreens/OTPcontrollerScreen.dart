@@ -3,7 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
-import 'package:subs_vendor/screens/HomeScreen.dart';
+import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/SignUpScreen.dart';
 
@@ -42,7 +42,7 @@ class _OtpControllerScreenState extends State<OtpControllerScreen> {
     print('otp sent');
     print(widget.phone);
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: widget.phone,
+      phoneNumber: widget.codeDigits+ widget.phone,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await FirebaseAuth.instance
             .signInWithCredential(credential)

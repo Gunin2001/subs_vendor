@@ -1,16 +1,16 @@
-// ignore_for_file: file_names, prefer_const_constructors, use_key_in_widget_constructors
+// ignore_for_file: file_names, prefer_const_constructors, use_key_in_widget_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:subs_vendor/SharedPreferences_service.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/SignUpapi.dart';
-import 'package:subs_vendor/screens/UserInfoScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/UserInfoScreen.dart';
 import 'package:subs_vendor/shared_preferences/login_preferences.dart';
 import 'package:subs_vendor/shared_preferences/token_preferences.dart';
+import 'package:subs_vendor/shared_preferences/type_preference.dart';
 import 'package:subs_vendor/widgets/CommonTextField.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 import 'LoginScreen.dart';
@@ -20,7 +20,6 @@ class SignUpScreen extends StatefulWidget {
   static String routeName = "/signUp";
   final String phone;
   const SignUpScreen({required this.phone});
-  final String type = 'vendor';
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -32,11 +31,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final passwordController = TextEditingController();
   final confirmController = TextEditingController();
   bool _isLoading = false;
+  var isType;
+  var type;
 
   @override
   void initState() {
     super.initState();
+    getType();
+    typePreference = TypePreference();
     phonetxtController.text = widget.phone;
+  }
+
+  getType() async {
+    var isType = await typePreference!.getTypeStatus();
+    type = isType ? 'Vendor' : "Customer";
+    print(type.toString());
   }
 
   onSignUp() async {
@@ -45,13 +54,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         _isLoading = true;
       });
       var response = await SignUp.signUp(
-          phonetxtController.text, passwordController.text, widget.type);
+          phonetxtController.text, passwordController.text, type.toString());
 
       if (response.statusCode == 200) {
-        tokenPreference
-            .setTokenPreferenceData(response.data['data'].toString());
         loginPreference?.setLoginStatus(true);
-        print(await tokenPreference.getTokenPreferenceData());
         setState(() {
           Navigator.pushNamed(context, ProfilePage.routeName);
         });
@@ -268,10 +274,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                           )),
-                      child: Text(
-                        'Sign Up',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      )),
+                      child:  _isLoading
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: 30,
+                                  width: 30,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  "Please Wait...",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                )
+                              ],
+                            )
+                          : Text(
+                              'Login',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
+                            )),
                 ),
                 SizedBox(
                   height: 10,

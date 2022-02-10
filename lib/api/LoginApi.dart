@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:subs_vendor/shared_preferences/token_profile.dart';
 
 class LoginApi {
   static Future login(var phoneno, var password, var type) async {
@@ -24,7 +25,12 @@ class LoginApi {
     }));
     print(response.data);
     if (response.statusCode == 200) {
-      print(response.data);
+      tokenProfile =
+          TokenProfile.fromJson(json.decode('"${response.data['data']}"'));
+          print('123');
+      //  print('${json.decode(response.data['data'])}');
+      //  print('${json.decode(response.data)['data']}');
+      print(tokenProfile?.token);
       return response;
     } else if (response.statusCode == 400) {
       return response;

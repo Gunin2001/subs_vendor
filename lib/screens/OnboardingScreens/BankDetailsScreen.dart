@@ -6,7 +6,7 @@ import 'package:subs_vendor/api/UpdateBankDetailsApi.dart';
 import 'package:subs_vendor/widgets/CommonTextField.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 
-import 'HomeScreen.dart';
+import '../CustomerScreens/HomeScreen.dart';
 
 class BankDetailScreen extends StatefulWidget {
   static String routeName = '/bank';

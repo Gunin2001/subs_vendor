@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
-import 'package:subs_vendor/screens/HomeScreen.dart';
-import 'package:subs_vendor/screens/MyCustomers.dart';
-import 'package:subs_vendor/screens/SettingsScreen.dart';
+import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
+import 'package:subs_vendor/screens/VendorScreens/MyCustomers.dart';
+import 'package:subs_vendor/screens/CommonScreens.dart/SettingsScreen.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({ Key? key }) : super(key: key);

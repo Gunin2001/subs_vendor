@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/screens/ApprovalsScreen.dart';
-import 'package:subs_vendor/screens/NotificationsScreen.dart';
+import 'package:subs_vendor/screens/CommonScreens.dart/NotificationsScreen.dart';
 import 'package:subs_vendor/widgets/Bottom_Navigation_Bar.dart';
 
 class AlertsScreen extends StatefulWidget {

@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:subs_vendor/SharedPreferences_service.dart';
 
 class UpdateBankDetails {
   static Future updateBank(var holdername, var accno, var ifsc, var upi) async {

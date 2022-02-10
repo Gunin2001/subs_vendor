@@ -4,10 +4,9 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:subs_vendor/SharedPreferences_service.dart';
 
 class UpdateProfile {
-  static Future updateProfile(var name, var email, var address, var pincode, var type, var shopname) async {
+  static Future updateProfile(var name, var email, var address, var pincode, var type, var shopname ,var desc ) async {
     var dio = Dio();
     FormData formData = FormData.fromMap({
       'name': name,
@@ -15,7 +14,8 @@ class UpdateProfile {
       'address': address,
       'pincode': pincode,
       'type': type,
-      'shopname': shopname
+      'shopname': shopname,
+      'bio':desc
     });
 
     SharedPreferences prefs = await SharedPreferences.getInstance();

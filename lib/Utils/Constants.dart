@@ -11,4 +11,27 @@ class AppColors {
   static const tileSelectGreen = Color.fromRGBO(84, 177, 117, 1);
   static const iconGrey = Color.fromRGBO(185, 192, 202, 1);
 }
+  List<String> Images = [
+    'lib/assets/images/Ellipse 13.png',
+'lib/assets/images/Ellipse 14.png',
+'lib/assets/images/Ellipse 15.png',
+'lib/assets/images/Ellipse 16.png',
+'lib/assets/images/Ellipse 17.png',
+'lib/assets/images/Ellipse 18.png',
+'lib/assets/images/Ellipse 19.png',
+'lib/assets/images/Ellipse 20.png',
+'lib/assets/images/Ellipse 21.png',
+'lib/assets/images/Ellipse 22.png',
+'lib/assets/images/Ellipse 23.png',
+'lib/assets/images/Ellipse 24.png',
+'lib/assets/images/Ellipse 25.png',
+'lib/assets/images/Ellipse 26.png',
+'lib/assets/images/Ellipse 27.png',
+'lib/assets/images/Ellipse 28.png',
+'lib/assets/images/Ellipse 29.png',
+'lib/assets/images/Ellipse 30.png',
+'lib/assets/images/Ellipse 31.png',
+'lib/assets/images/Ellipse 32.png',
+  ];
+
 

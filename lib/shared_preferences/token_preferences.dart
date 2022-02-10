@@ -19,7 +19,7 @@ class TokenPreference {
       data = prefs.get(_USER_DATA);
       data = json.decode(data);
     } catch (e) {
-      data = null;
+      data = 'null';
     }
 
     return data;

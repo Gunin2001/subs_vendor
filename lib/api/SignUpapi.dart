@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:subs_vendor/SharedPreferences_service.dart';
+import 'package:subs_vendor/shared_preferences/token_profile.dart';
 
 class SignUp {
   static Future signUp(var phoneno, var password, var type) async {
@@ -24,11 +24,9 @@ class SignUp {
     }));
     print(response.data);
     if (response.statusCode == 200) {
-      print(response.data);
-      /*SharedPrefsService().setUserToken(response.data.toString());
-      String token = SharedPrefsService().getUserToken().toString();
-      print(' the user token is $token'); */
-      // Map<String, dynamic> jsonResponse = convert.jsonDecode(response.data) as Map<String, dynamic>;
+      TokenProfile.fromJson(json.decode('"${response.data['data']}"'));
+          print('Token after signUp');
+      print(tokenProfile?.token);
       return response;
     } else if (response.statusCode == 400) {
       return response;

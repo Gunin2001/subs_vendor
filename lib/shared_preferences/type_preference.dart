@@ -1,24 +1,24 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-TypePreference ?typePreference;
+TypePreference ? typePreference;
 
 class TypePreference {
-  static const _type_STATUS = 'typeSTATUS';
+  static const _Type_STATUS = 'TypeSTATUS';
 
-  settypeStatus(String status) async {
+  setTypeStatus(bool status) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(_type_STATUS, status);
+    prefs.setBool(_Type_STATUS, status);
     
   }
   
-  Future<String> gettypeStatus() async {
+  Future<bool> getTypeStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
-      return prefs.getString(_type_STATUS) ?? '';
+      return prefs.getBool(_Type_STATUS) ?? false;
     } catch (e) {
-      print('Error in type preference : $e');
-      return '';
+      print('Error in Type preference : $e');
+      return false;
     }
   }
  

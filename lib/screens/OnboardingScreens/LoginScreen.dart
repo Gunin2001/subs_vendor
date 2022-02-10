@@ -3,11 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:subs_vendor/SharedPreferences_service.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/LoginApi.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
-import 'package:subs_vendor/screens/HomeScreen.dart';
+import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
 import 'package:subs_vendor/shared_preferences/login_preferences.dart';
 import 'package:subs_vendor/shared_preferences/token_preferences.dart';
@@ -35,7 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
     var response = await LoginApi.login(
         usernameController.text, passwordController.text, widget.type);
     if (response.statusCode == 200) {
-      tokenPreference.setTokenPreferenceData(response.data['data'].toString());
       print(await tokenPreference.getTokenPreferenceData());
       loginPreference?.setLoginStatus(true);
       setState(() {
