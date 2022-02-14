@@ -8,6 +8,7 @@ import 'package:subs_vendor/Models/Vendor_model.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/GetSubscriptions.dart';
 import 'package:subs_vendor/api/SearchVendor.dart';
+import 'package:subs_vendor/screens/CommonScreens.dart/AlertsScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/AddSubScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/CustomSubscription.dart';
 import 'package:subs_vendor/shared_preferences/token_profile.dart';
@@ -31,7 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    mapOfSubs = null;
   }
+
+  bool _isLoading = false;
 
   fetchVendor(String phoneno) async {
     mapOfSubs = await getSearch(tokenProfile?.token, phoneno);
@@ -48,24 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
     //print(id);
     return mapOfSubs;
   }
-  // fetchSubs() async {
-  //   UserSubModel? mapOfSubs = null;
-  //   mapOfSubs = await getSearch(tokenProfile?.token, searchController.text);
-  //   print('In homescreen list');
-  //   //print(mapOfSubs.data.toString());
-  //   // final id = mapOfSubs.data.map((e) {
-  //   //   print(e.id);
-  //   //   return e.id;
-  //   // });
-  //   print(mapOfSubs?.data.first['vendor_details'][0]['phoneno']);
-  //   // final model = mapOfSubs.data.map((e) => Vendor.fromMap(e.da));
-  //   //final model = Vendor.fromMap(mapOfSubs.data[0]);
-  //   //print(model.toString());
-  //   //print(id);
-  //   return mapOfSubs!.data;
-  // }
 
   Widget build(BuildContext context) {
+    double height, width;
+height = MediaQuery.of(context).size.height;
+width = MediaQuery.of(context).size.width;
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 13, right: 13, bottom: 5),
@@ -73,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.primaryGrey,
         elevation: 0,
         title: Text("Subscription App"),
@@ -84,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AppColors.iconBlack,
               ),
               onPressed: () {
-                // do something
+                Navigator.pushNamed(context, AlertsScreen.routeName);
               })
         ],
       ),
@@ -92,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: EdgeInsets.all(15),
         children: [
           Container(
-            height: 45,
+            height: height*0.065,
             child: TextField(
               autofocus: false,
               cursorColor: AppColors.iconGrey,
@@ -127,24 +119,57 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               controller: searchController,
               onSubmitted: (value) async {
-                var list = await fetchVendor(value);
                 setState(() {
-                  mapOfSubs = list;
+                  mapOfSubs = [''];
+                  _isLoading = true;
                 });
+                if (searchController.text.length == 10) {
+                  var list = await fetchVendor(value);
+                  setState(() {
+                    mapOfSubs = list;
+                    _isLoading = false;
+                  });
+                } else {
+                  setState(() {
+                    _isLoading = false;
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    content: Text("Enter a Valid Number"),
+                    duration: Duration(seconds: 4),
+                  ));
+                }
               },
-              onChanged: (value) {
-                mapOfSubs = null;
-              },
+              keyboardType: TextInputType.phone,
             ),
           ),
-          SizedBox(height: 25.0),
+          SizedBox(height: height*0.032),
           ScreenSizeButton(
               "Add a Custom Subscription", context, CustomSubScreen.routeName),
-          SizedBox(height: 25),
+          SizedBox(height: height*0.032),
           mapOfSubs == null
-              ? Container()
-              : vendorTile(mapOfSubs['name'], mapOfSubs['phoneno'], 'abc',
-                  'lib/assets/images/milk.png', context),
+              ? ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(height: height*0.052),
+                    Image.asset(
+                      "lib/assets/images/EmptySearch.png",
+                      height: height*0.234,
+                      width: height*0.234,
+                    ),
+                  ],
+                )
+              : _isLoading
+                  ? SizedBox(height: height*0.156,child: Center(child: CircularProgressIndicator()))
+                  : mapOfSubs == true
+                      ? Text(
+                          "Contact not listed try adding a custom subscription")
+                      : mapOfSubs['isVendor']
+                          ? vendorTile(mapOfSubs['name'], mapOfSubs['phoneno'],
+                              'abc', 'lib/assets/images/milk.png', context,height)
+                          : Text("Vendor Not Found"),
+
           // FutureBuilder(
           //     future: fetchSubs(),
           //     builder: (context, AsyncSnapshot list) {
@@ -178,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 Widget vendorTile(String name, String phoneno, String desc, String image,
-    BuildContext context) {
+    BuildContext context,double height) {
   return Card(
     elevation: 5.0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -187,8 +212,8 @@ Widget vendorTile(String name, String phoneno, String desc, String image,
       children: [
         Image.asset(
           image,
-          height: 120.0,
-          width: 120.0,
+          height: height*0.156,
+          width: height*0.156,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -25,12 +25,15 @@ class _ChooseTypeScreenState extends State<ChooseTypeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height, width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: ListView(
         padding: EdgeInsets.all(15),
         children: [
           SizedBox(
-            height: 60,
+            height: height * 0.08,
           ),
           Align(
               alignment: Alignment.centerLeft,
@@ -39,14 +42,15 @@ class _ChooseTypeScreenState extends State<ChooseTypeScreen> {
                 style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
               )),
           SizedBox(
-            height: 200,
+            height: height * 0.26,
           ),
           Container(
-            width: double.infinity,
-            height: 50,
+            width: width,
+            height: height * 0.065,
             child: TextButton(
                 onPressed: () async {
                   typePreference?.setTypeStatus(false);
+                  ConstantType = false;
                   Navigator.pushNamed(context, SignUpOtpScreen.routeName);
                   // Navigator.push(
                   //     context,
@@ -68,15 +72,16 @@ class _ChooseTypeScreenState extends State<ChooseTypeScreen> {
                 )),
           ),
           SizedBox(
-            height: 15,
+            height: height * 0.02,
           ),
           Container(
-            width: double.infinity,
-            height: 50,
+            width: width,
+            height: height * 0.065,
             child: TextButton(
                 onPressed: () async {
                   typePreference?.setTypeStatus(true);
-                   Navigator.pushNamed(context, SignUpOtpScreen.routeName);
+                  ConstantType = true;
+                  Navigator.pushNamed(context, SignUpOtpScreen.routeName);
                   // Navigator.push(
                   //     context,
                   //     MaterialPageRoute(

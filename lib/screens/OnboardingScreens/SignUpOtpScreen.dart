@@ -18,6 +18,9 @@ class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
   TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    double height, width;
+height = MediaQuery.of(context).size.height;
+width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -25,7 +28,7 @@ class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 100,
+              height: height*0.13,
             ),
             Container(
                 margin: EdgeInsets.all(10),
@@ -35,11 +38,11 @@ class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 )),
             SizedBox(
-              height: 50,
+              height: height*0.065,
             ),
             SizedBox(
-              width: 400,
-              height: 60,
+              width: width,
+              height: height*0.08,
               child: CountryCodePicker(
                 onChanged: (country) {
                   setState(() {
@@ -53,7 +56,7 @@ class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
               ),
             ),
             Container(
-              height: 80,
+              height: height*0.1,
               margin: EdgeInsets.only(left: 15, right: 15),
               child: TextField(
                 showCursor: true,
@@ -99,7 +102,7 @@ class _SignUpOtpScreenState extends State<SignUpOtpScreen> {
             ),
             Container(
               margin: EdgeInsets.all(15),
-              height: 50,
+              height: height*0.065,
               width: double.infinity,
               child: ElevatedButton(
                   style: ButtonStyle(

@@ -78,6 +78,9 @@ class _OtpControllerScreenState extends State<OtpControllerScreen> {
   }
 
   Widget build(BuildContext context) {
+    double height, width;
+height = MediaQuery.of(context).size.height;
+width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -94,8 +97,8 @@ class _OtpControllerScreenState extends State<OtpControllerScreen> {
             padding: EdgeInsets.all(40),
             child: PinPut(
               fieldsCount: 6,
-              eachFieldHeight: 40,
-              eachFieldWidth: 40,
+              eachFieldHeight: height*0.052,
+              eachFieldWidth: width*0.1,
               focusNode: _pinOtpCodeFocus,
               controller: _pinOtpController,
               submittedFieldDecoration: pinOtpBoxDecoration,

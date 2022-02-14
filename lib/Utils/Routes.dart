@@ -2,8 +2,10 @@
 
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
+import 'package:subs_vendor/screens/CommonScreens.dart/AlertsScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/AddSubScreen.dart';
-import 'package:subs_vendor/screens/AlertsSCreen.dart';
+import 'package:subs_vendor/screens/CustomerScreens/MySubscriptionsScreen.dart';
+import 'package:subs_vendor/screens/CustomerScreens/SubSuccessScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/BankDetailsScreen.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
@@ -31,5 +33,7 @@ final Map<String, WidgetBuilder> routes = {
   CustomSubScreen.routeName: (context) => CustomSubScreen(),
   ChooseTypeScreen.routeName: (context) => ChooseTypeScreen(),
   OverviewScreen.routeName: (context) => OverviewScreen(),
+  SubSuccess.routeName: (context) => SubSuccess(),
+  MySubScreen.routeName: (context) => MySubScreen(),
   blank.routeName: (context) => blank(),
 };

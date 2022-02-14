@@ -34,7 +34,6 @@ class _AlertsScreenState extends State<AlertsScreen> {
       ),
       body: PageView(
         children: [
-          ApprovalsScreen(),
           NotificationScreen()
         ],
       ),

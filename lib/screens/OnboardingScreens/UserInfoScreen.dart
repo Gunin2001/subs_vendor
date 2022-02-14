@@ -77,9 +77,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    double height, width;
+height = MediaQuery.of(context).size.height;
+width = MediaQuery.of(context).size.width;
     double defaultFontSize = 14;
-    double ContainerSize = 170;
-    double picSize = 60;
+    double ContainerSize = height*0.221;
+    double picSize = height*0.08;
     return Form(
       key: _form,
       child: Scaffold(
@@ -128,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
                 SizedBox(
-                  height: 55,
+                  height: height*0.071,
                 ),
                 ListView(
                     shrinkWrap: true,
@@ -140,10 +143,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           child: Text("Name",
                               style: TextStyle(color: AppColors.iconGrey))),
                       SizedBox(
-                        height: 10,
+                        height: height*0.013,
                       ),
                       Container(
-                        height: 50,
+                        height: height*0.065,
                         child: TextFormField(
                           showCursor: true,
                           decoration: InputDecoration(
@@ -184,17 +187,17 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: height*0.013,
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
                           child: Text("Email-ID",
                               style: TextStyle(color: AppColors.iconGrey))),
                       SizedBox(
-                        height: 10,
+                        height: height*0.013,
                       ),
                       Container(
-                        height: 50,
+                        height: height*0.065,
                         child: TextFormField(
                           showCursor: true,
                           decoration: InputDecoration(
@@ -249,7 +252,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: height*0.013,
                       ),
                       type.data == true
                           ? ListView(
@@ -257,18 +260,18 @@ class _ProfilePageState extends State<ProfilePage> {
                               physics: NeverScrollableScrollPhysics(),
                               children: [
                                   InsertText("Shop Name",
-                                      "Enter your Shop Name", shopController),
+                                      "Enter your Shop Name", shopController, height),
                                   SizedBox(
-                                    height: 10,
+                                    height: height*0.013,
                                   ),
                                   InsertText(
                                       "Description",
                                       "Enter a small Description",
-                                      descriptionController),
+                                      descriptionController,height),
                                 ])
                           : SizedBox(),
                       SizedBox(
-                        height: 10,
+                        height: height*0.013,
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
@@ -277,10 +280,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(color: AppColors.iconGrey),
                           )),
                       SizedBox(
-                        height: 10,
+                        height: height*0.013,
                       ),
                       Container(
-                        height: 80,
+                        height: height*0.1,
                         child: TextFormField(
                           showCursor: true,
                           inputFormatters: [
@@ -327,7 +330,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 10,
+                        height: height*0.013,
                       ),
                       Align(
                           alignment: Alignment.centerLeft,
@@ -336,10 +339,10 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(color: AppColors.iconGrey),
                           )),
                       SizedBox(
-                        height: 10,
+                        height: height*0.013,
                       ),
                       Container(
-                        height: 50,
+                        height: height*0.065,
                         child: TextFormField(
                           showCursor: true,
                           decoration: InputDecoration(
@@ -387,11 +390,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                       SizedBox(
-                        height: 50,
+                        height: height*0.065,
                       ),
                       Container(
                         width: double.infinity,
-                        height: 50,
+                        height: height*0.065,
                         child: TextButton(
                             onPressed: () async {
                               await _onProceed();
@@ -409,14 +412,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                  height: 30,
-                                  width: 30,
+                                  height: height*0.04,
+                                  width: width*0.075,
                                   child: CircularProgressIndicator(
                                     color: Colors.white,
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 20,
+                                  width: width*0.05,
                                 ),
                                 Text(
                                   "Please Wait...",
@@ -439,7 +442,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-Widget InsertText(String title, String hint, TextEditingController controller) {
+Widget InsertText(String title, String hint, TextEditingController controller , double height) {
   return ListView(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),
@@ -451,10 +454,10 @@ Widget InsertText(String title, String hint, TextEditingController controller) {
             style: TextStyle(color: AppColors.iconGrey),
           )),
       SizedBox(
-        height: 10,
+        height: height*0.013,
       ),
       Container(
-        height: 50,
+        height: height*0.065,
         child: TextFormField(
           showCursor: true,
           decoration: InputDecoration(

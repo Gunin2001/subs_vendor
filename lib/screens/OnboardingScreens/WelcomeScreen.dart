@@ -16,7 +16,9 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    double width = double.infinity;
+   double height, width;
+  height = MediaQuery.of(context).size.height;
+  width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(children: [
@@ -28,7 +30,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         ListView(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.all(10),
+          padding: EdgeInsets.all(width*0.025),
           children:[
         Align(
                   alignment: Alignment.centerLeft,
@@ -38,7 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     fontWeight: FontWeight.bold
                   ),),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: height*0.01),
                Align(
                   alignment: Alignment.centerLeft,
                   child: Text("Access all your subscription with designated Intervals",style: 
@@ -48,7 +50,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     color: AppColors.iconGrey
                   ),),
                 ), 
-                SizedBox(height: 40), 
+                SizedBox(height: height*0.04), 
                 ScreenSizeButton("Get Started", context, LoginScreen.routeName),
       ]),
       ]

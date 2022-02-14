@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
+import 'package:subs_vendor/screens/CommonScreens.dart/AlertsScreen.dart';
 import 'package:subs_vendor/widgets/Bottom_Navigation_Bar.dart';
 import 'package:subs_vendor/widgets/Search_Bar.dart';
 
@@ -19,6 +20,9 @@ class OverviewScreen extends StatefulWidget {
 class _OverviewScreenState extends State<OverviewScreen> {
   @override
   Widget build(BuildContext context) {
+    double height, width;
+height = MediaQuery.of(context).size.height;
+width = MediaQuery.of(context).size.width;
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 13, right: 13, bottom: 5),
@@ -37,20 +41,20 @@ class _OverviewScreenState extends State<OverviewScreen> {
                 color: AppColors.iconBlack,
               ),
               onPressed: () {
-                // do something
+               Navigator.pushNamed(context, AlertsScreen.routeName);
               })
         ],
       ),
       body: ListView(
         padding: EdgeInsets.all(10),
         children: [
-          SizedBox(height: 25.0),
+          SizedBox(height: height*0.032),
           Text(
             "Today's Overview",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 10,
+            height: height*0.013,
           ),
           Row(
             children: [
@@ -60,8 +64,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Container(
-                  height: 70,
-                  width: 113,
+                  height: height*0.09,
+                  width: width*0.29,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(25))),
                   child: Column(
@@ -86,8 +90,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Container(
-                  height: 70,
-                  width: 113,
+                  height: height*0.09,
+                  width: width*0.29,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(25))),
                   child: Column(
@@ -112,8 +116,8 @@ class _OverviewScreenState extends State<OverviewScreen> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Container(
-                  height: 70,
-                  width: 113,
+                  height: height*0.09,
+                  width: width*0.29,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(25))),
                   child: Column(
@@ -135,27 +139,27 @@ class _OverviewScreenState extends State<OverviewScreen> {
             ],
           ),
           SizedBox(
-            height: 15,
+            height: height*0.02,
           ),
           Text(
             "Recent Transactions",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: 15,
+            height: height*0.02,
           ),
           SearchBar(),
           SizedBox(
-            height: 15,
+            height: height*0.02,
           ),
-          cashNotificationCard(),
+          cashNotificationCard(width, height),
         ],
       ),
     );
   }
 }
 
-Widget cashNotificationCard() {
+Widget cashNotificationCard(double width, double height) {
   return Card(
     color: AppColors.primaryGrey,
     shape: RoundedRectangleBorder(
@@ -164,18 +168,18 @@ Widget cashNotificationCard() {
     child: Padding(
       padding: const EdgeInsets.all(5.0),
       child: SizedBox(
-        height: 60,
+        height: height*0.08,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(width: 5,),
+            SizedBox(width: width*0.0125,),
             ClipOval(
               child: Image.asset(
                 Images[Random().nextInt(Images.length)],
-                height: 45,
-                width: 45,),
+                height: height*0.065,
+                width: width*0.11,),
             ),
-            SizedBox(width: 10,),
+            SizedBox(width: width*0.025,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -183,7 +187,7 @@ Widget cashNotificationCard() {
                 Text('Riyaz Mohammed',style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300)),
                 Text('through UPI')
               ],),
-            SizedBox(width: 65,),
+            SizedBox(width: width*0.16,),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

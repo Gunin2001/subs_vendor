@@ -25,6 +25,9 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
   @override
   Widget build(BuildContext context) {
     double defaultFontSize = 14;
+    double height, width;
+height = MediaQuery.of(context).size.height;
+width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -39,21 +42,21 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
             icon: Icon(Icons.arrow_back_ios_new_outlined)),
       ),
       body:ListView(
-        padding: EdgeInsets.all(10), 
+        padding: EdgeInsets.all(width*0.025), 
         children:[
-          SizedBox(height:15),
+          SizedBox(height:height*0.02),
           Text("Account Details",
           style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w600),),
-          SizedBox(height:15),
+          SizedBox(height:height*0.02),
           Align(
               alignment: Alignment.centerLeft,
               child:
                   Text("Account Number:", style: TextStyle(color: AppColors.iconGrey))),
           SizedBox(
-            height: 10,
+            height: height*0.013,
           ),
           Container(
-    height: 50,
+    height: height*0.065,
     child: TextField(
       showCursor: true,
       decoration: InputDecoration(
@@ -87,17 +90,17 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
     ),
   ),
           SizedBox(
-            height: 10,
+            height: height*0.013,
           ),
           Align(
               alignment: Alignment.centerLeft,
               child: Text("Account Holder Name :",
                   style: TextStyle(color: AppColors.iconGrey))),
           SizedBox(
-            height: 10,
+            height: height*0.013,
           ),
          Container(
-    height: 50,
+    height: height*0.065,
     child: TextField(
       showCursor: true,
       decoration: InputDecoration(
@@ -131,16 +134,16 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
     ),
   ),
           SizedBox(
-            height: 10,
+            height: height*0.013,
           ),
           Align(
               alignment: Alignment.centerLeft,
               child: Text("IFSC Code",
                   style: TextStyle(color: AppColors.iconGrey))),
           SizedBox(
-            height: 10,
+            height: height*0.013,
           ),Container(
-    height: 50,
+    height: height*0.065,
     child: TextField(
       showCursor: true,
       decoration: InputDecoration(
@@ -175,21 +178,21 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
   ),
           
           SizedBox(
-            height: 10,
+            height: height*0.013,
           ),
-          SizedBox(height:5),
+          SizedBox(height:0.006),
           Text("UPI Details",
           style: TextStyle(color: Colors.black,fontSize: 18,fontWeight: FontWeight.w600),),
-          SizedBox(height:15),
+          SizedBox(height:height*0.02),
           Align(
               alignment: Alignment.centerLeft,
               child: Text("UPI ID or Phone Number",
                   style: TextStyle(color: AppColors.iconGrey))),
           SizedBox(
-            height: 10,
+            height: height*0.013,
           ),
           Container(
-    height: 50,
+    height: height*0.065,
     child: TextField(
       showCursor: true,
       decoration: InputDecoration(
@@ -223,10 +226,10 @@ class _BankDetailScreenState extends State<BankDetailScreen> {
     ),
   )
           ,
-          SizedBox(height: 180,),
+          SizedBox(height: height*0.234,),
           Container(
-    width: double.infinity,
-    height: 50,
+    width: width,
+    height: height*0.065,
     child: TextButton(
         onPressed: () async {
                       var response = await UpdateBankDetails.updateBank(

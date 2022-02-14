@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:cool_dropdown/cool_dropdown.dart';
-import 'package:subs_vendor/api/AddProductApi.dart';
 import 'package:subs_vendor/api/AddSubscription.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
+import 'package:subs_vendor/screens/CustomerScreens/SubSuccessScreen.dart';
 import 'package:subs_vendor/shared_preferences/token_profile.dart';
 
 class AddSubScreen extends StatefulWidget {
@@ -47,6 +47,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
   ];
   var interval = {'label': 'Daily', 'value': 'Daily'};
   String dropdownValue = 'Daily';
+
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -55,6 +57,9 @@ class _AddSubScreenState extends State<AddSubScreen> {
   _onAdd() async {
     print('add called');
     if (_form.currentState!.validate() == true) {
+      setState(() {
+        _isLoading = true;
+      });
       double amount = double.parse(priceController.text) * quantity;
       print(amount);
       var response = await AddSubscriptionApi.addSub(
@@ -69,10 +74,13 @@ class _AddSubScreenState extends State<AddSubScreen> {
         widget.phoneNo,
       );
       if (response.statusCode == 200) {
-        Navigator.pushNamed(context, HomeScreen.routeName);
+        Navigator.pushNamed(context, SubSuccess.routeName);
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(response.error.toString()),
+          content: Text(response.toString()),
           duration: Duration(seconds: 4),
         ));
       }
@@ -86,6 +94,9 @@ class _AddSubScreenState extends State<AddSubScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height, width;
+height = MediaQuery.of(context).size.height;
+width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -101,14 +112,14 @@ class _AddSubScreenState extends State<AddSubScreen> {
               Icons.arrow_back_ios_new_outlined,
             )),
       ),
-      body: Form(
+      body: Form (
         key: _form,
         child: ListView(
           shrinkWrap: true,
           padding: EdgeInsets.all(15),
           children: [
-            SizedBox(
-              height: 15,
+             SizedBox(
+              height: height*0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -118,8 +129,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 SizedBox(
-                  width: 170,
-                  height: 50,
+                  width: width*0.425,
+                  height: height*0.065,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
@@ -136,7 +147,7 @@ class _AddSubScreenState extends State<AddSubScreen> {
               ],
             ),
             SizedBox(
-              height: 15,
+              height: height*0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -146,8 +157,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 SizedBox(
-                  width: 170,
-                  height: 50,
+                  width: width*0.425,
+                  height: height*0.065,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Center(
@@ -163,7 +174,7 @@ class _AddSubScreenState extends State<AddSubScreen> {
                 )
               ],
             ),
-            SizedBox(height: 15),
+            SizedBox(height: height*0.02),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -172,9 +183,9 @@ class _AddSubScreenState extends State<AddSubScreen> {
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 CoolDropdown(
-                  dropdownWidth: 150,
-                  resultWidth: 170,
-                  dropdownHeight: 250,
+                  dropdownWidth: width*0.375,
+                  resultWidth: width*0.425,
+                  dropdownHeight: height*0.325,
                   dropdownList: dropdownItemCategoryList,
                   dropdownItemTopGap: 5,
                   dropdownItemBottomGap: 5,
@@ -196,8 +207,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
                   resultMainAxis: MainAxisAlignment.center,
                   gap: 10,
                   resultIcon: Container(
-                      width: 20,
-                      height: 20,
+                      width: width*0.05,
+                      height: height*0.026,
                       child: Center(
                         child: Icon(
                           Icons.arrow_drop_down,
@@ -216,7 +227,7 @@ class _AddSubScreenState extends State<AddSubScreen> {
               ],
             ),
             SizedBox(
-              height: 15,
+              height: height*0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -226,8 +237,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 Container(
-                  width: 170,
-                  height: 50,
+                  width: width*0.425,
+                  height: height*0.065,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -237,7 +248,9 @@ class _AddSubScreenState extends State<AddSubScreen> {
                     child: Center(
                       child: TextFormField(
                         textAlign: TextAlign.center,
-                        decoration: InputDecoration(errorStyle: const TextStyle(fontSize: 0.01),),
+                        decoration: InputDecoration(
+                          errorStyle: const TextStyle(fontSize: 0.01),
+                        ),
                         controller: prodNameController,
                         style: TextStyle(fontSize: 18),
                         validator: (val) {
@@ -253,7 +266,7 @@ class _AddSubScreenState extends State<AddSubScreen> {
               ],
             ),
             SizedBox(
-              height: 15,
+              height: height*0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -272,8 +285,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
                   ],
                 ),
                 Container(
-                  width: 170,
-                  height: 50,
+                  width: width*0.425,
+                  height: height*0.065,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -285,7 +298,9 @@ class _AddSubScreenState extends State<AddSubScreen> {
                           controller: priceController,
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
-                          decoration: InputDecoration(errorStyle: const TextStyle(fontSize: 0.01),),
+                          decoration: InputDecoration(
+                            errorStyle: const TextStyle(fontSize: 0.01),
+                          ),
                           style: TextStyle(fontSize: 18),
                           validator: (val) {
                             if (val!.isEmpty) {
@@ -298,7 +313,7 @@ class _AddSubScreenState extends State<AddSubScreen> {
                 )
               ],
             ),
-            SizedBox(height: 30),
+            SizedBox(height: height*0.04),
             Text(
               "SI unit :",
               style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
@@ -472,7 +487,7 @@ class _AddSubScreenState extends State<AddSubScreen> {
               ),
             ),
             SizedBox(
-              height: 15,
+              height: height*0.02,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -498,8 +513,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
                           });
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: width*0.1,
+                          height: height*0.052,
                           decoration: ShapeDecoration(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(
@@ -513,7 +528,7 @@ class _AddSubScreenState extends State<AddSubScreen> {
                           )),
                         )),
                     SizedBox(
-                      width: 5,
+                      width: width*0.0125,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -535,7 +550,7 @@ class _AddSubScreenState extends State<AddSubScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5),
+                    SizedBox(width: width*0.0125,),
                     InkWell(
                         onTap: () {
                           setState(() {
@@ -543,8 +558,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
                           });
                         },
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: width*0.1,
+                          height: height*0.052,
                           decoration: ShapeDecoration(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(
@@ -561,7 +576,7 @@ class _AddSubScreenState extends State<AddSubScreen> {
                 )
               ],
             ),
-            SizedBox(height: 30),
+            SizedBox(height: height*0.04),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -570,9 +585,9 @@ class _AddSubScreenState extends State<AddSubScreen> {
                   style: TextStyle(color: AppColors.iconGrey, fontSize: 18),
                 ),
                 CoolDropdown(
-                  dropdownWidth: 150,
-                  resultWidth: 170,
-                  dropdownHeight: 200,
+                  dropdownWidth: width*0.375,
+                  resultWidth: width*0.425,
+                  dropdownHeight: height*0.325,
                   dropdownList: dropdownItemList,
                   dropdownItemTopGap: 5,
                   dropdownItemBottomGap: 5,
@@ -594,8 +609,8 @@ class _AddSubScreenState extends State<AddSubScreen> {
                   resultMainAxis: MainAxisAlignment.center,
                   gap: 10,
                   resultIcon: Container(
-                      width: 20,
-                      height: 20,
+                      width: width*0.05,
+                      height: height*0.026,
                       child: Center(
                         child: Icon(
                           Icons.arrow_drop_down,
@@ -614,42 +629,15 @@ class _AddSubScreenState extends State<AddSubScreen> {
               ],
             ),
             SizedBox(
-              height: 30,
+              height: height*0.04,
             ),
             Container(
-              width: double.infinity,
-              height: 50,
+              width: width,
+              height: height*0.065,
               child: TextButton(
                   onPressed: () async {
-                     print('add called');
-    if (_form.currentState!.validate() == true) {
-      double amount = double.parse(priceController.text) * quantity;
-      print(amount);
-      var response = await AddSubscriptionApi.addSub(
-        tokenProfile?.token,
-        category['value'].toString(),
-        priceController.text,
-        prodNameController.text,
-        unit,
-        quantity,
-        interval['value'].toString(),
-        amount,
-        widget.phoneNo,
-      );
-      if (response.statusCode == 200) {
-        Navigator.pushNamed(context, HomeScreen.routeName);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(response.toString()),
-          duration: Duration(seconds: 4),
-        ));
-      }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("All fields must be filled"),
-        duration: Duration(seconds: 4),
-      ));
-    }
+                    print('add custom called');
+                    _onAdd();
                   },
                   style: ButtonStyle(
                       backgroundColor:
@@ -659,14 +647,39 @@ class _AddSubScreenState extends State<AddSubScreen> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       )),
-                  child: Text(
-                    'Add Subscription',
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  )),
+                  child: _isLoading
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  height: height*0.04,
+                                  width: width*0.075,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  "Please Wait...",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                )
+                              ],
+                            )
+                          : Text(
+                              'Add Subscription',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 18),
+                            )
+                            ),
             ),
           ],
         ),
       ),
-    );
+    );;
   }
 }
+
+   

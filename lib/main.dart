@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/SignUpapi.dart';
 import 'package:subs_vendor/screens/CustomerScreens/AddSubScreen.dart';
 import 'package:subs_vendor/screens/CommonScreens.dart/AlertsScreen.dart';
+import 'package:subs_vendor/screens/CustomerScreens/MySubscriptionsScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/BankDetailsScreen.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
@@ -45,7 +47,9 @@ class _MyAppState extends State<MyApp> {
     //initstate() is used to initialize the contents of an already existing object.
     loginPreference = LoginPreference();
     tokenPreference = TokenPreference();
+    typePreference = TypePreference();
     getUserData();
+    getType();
     super.initState();
   }
 
@@ -54,6 +58,8 @@ class _MyAppState extends State<MyApp> {
     isType = await typePreference!.getTypeStatus();
     print("IS TYPE : $isType");
     type = isType ? 'Vendor' : "Customer";
+    ConstantType = isType;
+    print("ConstantType = $ConstantType");
   }
 
   getUserData() async {
@@ -71,18 +77,19 @@ class _MyAppState extends State<MyApp> {
     return FutureBuilder(
         future: getUserData(),
         builder: (context, AsyncSnapshot<dynamic> token) {
-          return GetMaterialApp(
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: ThemeData(
               fontFamily: 'Museo',
               primarySwatch: Colors.grey,
             ),
-            // home: (token.hasData && token.data != null)
-            //     ? type == 'Customer'
-            //         ? HomeScreen()
-            //         : MyCustomerScreen()
-            //     : WelcomeScreen(),
-            home:  OverviewScreen(),
+            home: (token.hasData && token.data != null)
+                ? type == 'Customer'
+                    ? HomeScreen()
+                    : MyCustomerScreen()
+                : WelcomeScreen(),
+            // home: HomeScreen(),
             routes: routes,
           );
         });

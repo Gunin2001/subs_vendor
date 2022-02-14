@@ -1,8 +1,13 @@
 // ignore_for_file: file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/LoginScreen.dart';
+import 'package:subs_vendor/shared_preferences/login_preferences.dart';
+import 'package:subs_vendor/shared_preferences/token_preferences.dart';
+import 'package:subs_vendor/shared_preferences/type_preference.dart';
 import 'package:subs_vendor/widgets/Bottom_Navigation_Bar.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 
@@ -17,13 +22,43 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    double height, width;
+height = MediaQuery.of(context).size.height;
+width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.white,
+        bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 13, right: 13, bottom: 5),
+        child: BottomNavBar(),
+      ),
         floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniCenterDocked,
+            FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: ScreenSizeButton('Logout', context, blank.routeName),
+          padding: EdgeInsets.all(height*0.02),
+          child: Container(
+    width: width,
+    height: height*0.065,
+    child: TextButton(
+        onPressed: () {
+          loginPreference!.setLoginStatus(false);
+              tokenPreference.cleartTokenPreferenceData();
+              typePreference!.clearTypeStatus();
+              FirebaseAuth.instance.signOut();
+          Navigator.pushNamed(context, LoginScreen.routeName);
+        },
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(AppColors.tileSelectGreen),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            )),
+        child: Text(
+          "Logout",
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        )),
+  ),
         ),
         appBar: AppBar(
           backgroundColor: AppColors.primaryGrey,
@@ -42,26 +77,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ],
         ),
         body: ListView(
+          physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.all(10),
           children: [
             SizedBox(
-              height: 25,
+              height: height*0.032,
             ),
             settingCard("Profile", context, blank.routeName),
             SizedBox(
-              height: 10,
+              height: height*0.013,
             ),
             settingCard("Payment History", context, blank.routeName),
             SizedBox(
-              height: 10,
+              height: height*0.013,
             ),
             settingCard("Help Center", context, blank.routeName),
             SizedBox(
-              height: 10,
+              height: height*0.013,
             ),
             settingCard("About", context, blank.routeName),
             SizedBox(
-              height: 10,
+              height: height*0.013,
             ),
             settingCard("Report a bug", context, blank.routeName),
           ],
@@ -79,6 +115,7 @@ Widget settingCard(
       Navigator.pushNamed(context, Screen);
     },
     child: Card(
+      color: AppColors.primaryGrey,
       elevation: 5,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

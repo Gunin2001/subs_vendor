@@ -81,6 +81,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   Widget build(BuildContext context) {
     double defaultFontSize = 14;
+    double height, width;
+height = MediaQuery.of(context).size.height;
+width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Form(
@@ -89,7 +92,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           padding: EdgeInsets.all(20),
           children: <Widget>[
             SizedBox(
-              height: 70,
+              height: height*0.09,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -101,9 +104,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: height*0.04),
                 Container(
-                  height: 50,
+                  height: height*0.065,
                   child: TextField(
                     showCursor: true,
                     decoration: InputDecoration(
@@ -142,10 +145,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: height*0.02,
                 ),
                 Container(
-                  height: 50,
+                  height: height*0.065,
                   child: TextFormField(
                       showCursor: true,
                       decoration: InputDecoration(
@@ -191,7 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }),
                 ),
                 SizedBox(
-                  height: 15,
+                  height: height*0.02,
                 ),
                 Container(
                   // height: 50,
@@ -242,7 +245,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       }),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: height*0.006,
                 ),
                 /* Container(
                   width: double.infinity,
@@ -257,11 +260,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),*/
                 SizedBox(
-                  height: 40,
+                  height: height*0.052,
                 ),
                 Container(
-                  width: double.infinity,
-                  height: 50,
+                  width: width,
+                  height: height*0.065,
                   child: TextButton(
                       onPressed: () async {
                         await onSignUp();
@@ -279,14 +282,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                  height: 30,
-                                  width: 30,
+                                  height: height*0.04,
+                                  width: width*0.075,
                                   child: CircularProgressIndicator(
                                     color: Colors.white,
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 20,
+                                  width: width*0.05,
                                 ),
                                 Text(
                                   "Please Wait...",
@@ -302,11 +305,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             )),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: height*0.013,
                 ),
               ],
             ),
-            SizedBox(height: 280),
+            SizedBox(height: height*0.364),
             Align(
               alignment: Alignment.bottomCenter,
               child: Row(
