@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/UpdateBankDetailsApi.dart';
+import 'package:subs_vendor/shared_preferences/token_profile.dart';
 import 'package:subs_vendor/widgets/CommonTextField.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 
@@ -233,6 +234,7 @@ width = MediaQuery.of(context).size.width;
     child: TextButton(
         onPressed: () async {
                       var response = await UpdateBankDetails.updateBank(
+                        tokenProfile!.token,
                         accountNoController.text,
                         accountHolderNameController.text,
                         ifscCodeController.text,

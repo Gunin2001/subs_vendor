@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateProfile {
-  static Future updateProfile(var name, var email, var address, var pincode, var type, var shopname ,var desc ) async {
+  static Future updateProfile(token ,var name, var email, var address, var pincode, var type, var shopname ,var desc ) async {
     var dio = Dio();
     FormData formData = FormData.fromMap({
       'name': name,
@@ -24,7 +24,7 @@ class UpdateProfile {
         data: formData,
         options: Options(
             headers: {
-              "authorization": "Bearer ${prefs.getString('UserToken')}",
+              "Authorization": "Bearer " + token,
             },
             validateStatus: (status) {
               return status! < 500;

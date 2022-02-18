@@ -299,7 +299,7 @@ width = MediaQuery.of(context).size.width;
                               ],
                             )
                           : Text(
-                              'Login',
+                              'Sign Up',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 18),
                             )),

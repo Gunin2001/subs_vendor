@@ -15,6 +15,8 @@ import 'package:subs_vendor/screens/CustomerScreens/AddSubScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/CustomSubscription.dart';
 import 'package:subs_vendor/screens/CustomerScreens/FindVendor.dart';
 import 'package:subs_vendor/screens/CustomerScreens/MySubscriptionsScreen.dart';
+import 'package:subs_vendor/screens/VendorScreens/MyCustomers.dart';
+import 'package:subs_vendor/screens/VendorScreens/OverviewScreen.dart';
 import 'package:subs_vendor/shared_preferences/token_profile.dart';
 import 'package:subs_vendor/widgets/Bar.dart';
 import 'package:subs_vendor/widgets/Bottom_Navigation_Bar.dart';
@@ -22,15 +24,15 @@ import 'package:subs_vendor/widgets/Product_Card.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 import 'package:subs_vendor/widgets/Search_Bar.dart';
 
-class HomeScreen extends StatefulWidget {
+class VendorHomeScreen extends StatefulWidget {
   static String routeName = "/home";
-  const HomeScreen({Key? key}) : super(key: key);
+  const VendorHomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _VendorHomeScreenState createState() => _VendorHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _VendorHomeScreenState extends State<VendorHomeScreen> {
   
   @override
   void initState() {
@@ -47,14 +49,14 @@ final _inactiveColor = Colors.white;
         containerHeight: 70,
         backgroundColor: AppColors.tileSelectGreen,
         selectedIndex: _currentIndex,
-        showElevation: false,
-        itemCornerRadius: 0,
-        //curve: Curves.easeIn,
+        showElevation: true,
+        itemCornerRadius: 50,
+       // curve: Curves.easeIn,
         onItemSelected: (index) => setState(() => _currentIndex = index),
         items: <BottomNavyBarItem>[
           BottomNavyBarItem(
             icon: ImageIcon(
-                    AssetImage('lib/assets/images/fruitsbasket.png')),
+                    AssetImage('lib/assets/images/contacts.png')),
             title: Text(''),
             activeColor: Color.fromRGBO(255, 255, 255, 0.6),
             inactiveColor: _inactiveColor,
@@ -63,8 +65,8 @@ final _inactiveColor = Colors.white;
           BottomNavyBarItem(
             icon: ImageIcon(
                     AssetImage(
-                      'lib/assets/images/calendar.png',
-                    )),
+                      'lib/assets/images/tasks.png'),
+                    ),
             title: Text(''),
             activeColor: Color.fromRGBO(255, 255, 255, 0.6),
             inactiveColor: _inactiveColor,
@@ -73,8 +75,8 @@ final _inactiveColor = Colors.white;
           BottomNavyBarItem(
             icon: ImageIcon(
                     AssetImage(
-                      'lib/assets/images/icon4.png',
-                    )),
+                      'lib/assets/images/icon4.png'),
+                    ),
             title: Text(''),
             activeColor: Color.fromRGBO(255, 255, 255, 0.6),
             inactiveColor: _inactiveColor,
@@ -89,11 +91,11 @@ final _inactiveColor = Colors.white;
     List<Widget> pages = [
       Container(
         alignment: Alignment.center,
-        child: FindVendorScreen(),
+        child: MyCustomerScreen(),
       ),
       Container(
         alignment: Alignment.center,
-        child:MySubScreen()
+        child:OverviewScreen()
         ),
       Container(
         alignment: Alignment.center,

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UpdateBankDetails {
-  static Future updateBank(var holdername, var accno, var ifsc, var upi) async {
+  static Future updateBank(token ,var holdername, var accno, var ifsc, var upi) async {
     var dio = Dio();
     FormData formData = FormData.fromMap({
       'accountno': accno,
@@ -21,7 +21,7 @@ class UpdateBankDetails {
         data: formData,
         options: Options(
             headers: {
-              "authorization": "Bearer ${prefs.getString('UserToken')}",
+              "Authorization": "Bearer " + token,
             },
             validateStatus: (status) {
               return status! < 500;

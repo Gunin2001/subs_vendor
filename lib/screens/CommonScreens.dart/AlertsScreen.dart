@@ -21,10 +21,6 @@ class _AlertsScreenState extends State<AlertsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left:13,right:13,bottom: 5),
-        child: BottomNavBar(),
-      ),
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: AppColors.primaryGrey,

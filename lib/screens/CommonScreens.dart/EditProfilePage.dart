@@ -9,23 +9,32 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/UpdateProfileApi.dart';
+import 'package:subs_vendor/screens/CommonScreens.dart/ProfileScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
 import 'package:subs_vendor/shared_preferences/token_profile.dart';
 import 'package:subs_vendor/shared_preferences/type_preference.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
 
-import 'BankDetailsScreen.dart';
-
-class ProfilePage extends StatefulWidget {
-  static String routeName = "/userInfo";
-
-  const ProfilePage({Key? key}) : super(key: key);
+class EditProfile extends StatefulWidget {
+  var name;
+  var email;
+  var address;
+  var pincode;
+  var shopname;
+  var desc;
+  EditProfile(
+      {required this.name,
+      required this.address,
+      required this.email,
+      required this.pincode,
+      this.desc = '',
+      this.shopname = ''});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class _EditProfileState extends State<EditProfile> {
   var isType;
   var type;
 
@@ -43,6 +52,12 @@ class _ProfilePageState extends State<ProfilePage> {
     // TODO: implement initState
     super.initState();
     typePreference = TypePreference();
+    nameController.text = widget.name;
+    emailController.text = widget.email;
+    addressController.text = widget.address;
+    pincodeController.text = widget.pincode;
+    shopController.text = widget.shopname;
+    descriptionController.text = widget.desc;
   }
 
   getType() async {
@@ -57,7 +72,8 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         _isLoading = true;
       });
-      var response = await UpdateProfile.updateProfile(tokenProfile!.token,
+      var response = await UpdateProfile.updateProfile(
+          tokenProfile!.token,
           nameController.text,
           emailController.text,
           addressController.text,
@@ -68,7 +84,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (response == 200) {
         print("-Changed Details-");
         print(response);
-        Navigator.pushNamed(context, BankDetailScreen.routeName);
+        Navigator.pushNamed(context, DisplayProfile.routeName);
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -436,7 +452,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ],
                                   )
                                 : Text(
-                                    'Proceed',
+                                    'Submit',
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 18),
                                   )),

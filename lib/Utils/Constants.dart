@@ -37,22 +37,24 @@ List<String> Images = [
 
 List<String> ImagesRect = [
   'lib/assets/images/Rectangular profiles/Rectangle 20.png',
-      'lib/assets/images/Rectangular profiles/Rectangle 21.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 22.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 23.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 24.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 25.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 26.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 27.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 28.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 29.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 30.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 31.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 32.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 33.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 34.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 35.png',
-       'lib/assets/images/Rectangular profiles/Rectangle 36.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 21.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 22.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 23.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 24.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 25.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 26.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 27.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 28.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 29.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 30.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 31.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 32.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 33.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 34.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 35.png',
+  'lib/assets/images/Rectangular profiles/Rectangle 36.png',
 ];
 var ConstantType;
+
+var screenNumber=0 ;
 var currentIndex = 1;

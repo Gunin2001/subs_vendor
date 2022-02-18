@@ -12,6 +12,7 @@ import 'package:subs_vendor/screens/BlankTargetScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/CustomSubscription.dart';
 import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/ResetPasswordScreen.dart';
 import 'package:subs_vendor/screens/VendorScreens/MyCustomers.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/LoginScreen.dart';
@@ -19,6 +20,7 @@ import 'package:subs_vendor/screens/OnboardingScreens/SignUpScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/UserInfoScreen.dart';
 import 'package:subs_vendor/screens/VendorScreens/OverviewScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/WelcomeScreen.dart';
+import 'package:subs_vendor/screens/VendorScreens/VendorHomeScreen.dart';
 import 'package:subs_vendor/shared_preferences/login_preferences.dart';
 import 'package:subs_vendor/shared_preferences/token_preferences.dart';
 import 'package:subs_vendor/shared_preferences/token_profile.dart';
@@ -57,7 +59,7 @@ class _MyAppState extends State<MyApp> {
   getType() async {
     isType = await typePreference!.getTypeStatus();
     print("IS TYPE : $isType");
-    type = isType ? 'Vendor' : "Customer";
+    type = isType ? 'vendor' : "Customer";
     ConstantType = isType;
     print("ConstantType = $ConstantType");
   }
@@ -87,9 +89,9 @@ class _MyAppState extends State<MyApp> {
             home: (token.hasData && token.data != null)
                 ? type == 'Customer'
                     ? HomeScreen()
-                    : MyCustomerScreen()
+                    : VendorHomeScreen()
                 : WelcomeScreen(),
-            // home: HomeScreen(),
+            // home: ResetPasswordScreen(phone: "8800128008",),
             routes: routes,
           );
         });

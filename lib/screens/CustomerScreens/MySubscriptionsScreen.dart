@@ -9,6 +9,7 @@ import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/api/GetSubscriptions.dart';
 import 'package:subs_vendor/api/GetVendorCustomers.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
+import 'package:subs_vendor/screens/CommonScreens.dart/YourSubscriptionScreen.dart';
 import 'package:subs_vendor/shared_preferences/token_profile.dart';
 import 'package:subs_vendor/widgets/Bottom_Navigation_Bar.dart';
 import 'package:subs_vendor/widgets/NavDrawer.dart';
@@ -55,27 +56,7 @@ class _MySubScreenState extends State<MySubScreen> {
 height = MediaQuery.of(context).size.height;
 width = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left:13,right:13,bottom: 5),
-        child: BottomNavBar(),
-      ),
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryGrey,
-        elevation: 0,
-        title: Text("Subscription App"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: AppColors.iconBlack,
-              ),
-              onPressed: () {
-                // do something
-              })
-        ],
-      ),
       body: ListView(
       padding: EdgeInsets.all(height*0.02),
       children: [
@@ -88,7 +69,9 @@ width = MediaQuery.of(context).size.width;
               future: fetchCustomers(),
               builder: (context, AsyncSnapshot list) {
                 if (list.data != null) {
-                  return ListView.builder(
+                  return list.data.length == 0? SizedBox(
+                    height: height*0.5,
+                    child: Center(child: Text("No subscriptions found"))):ListView.builder(
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       itemCount: list.data.length,
@@ -99,10 +82,13 @@ width = MediaQuery.of(context).size.width;
                             list.data[index]['productName'].toString(),
                             list.data[index]['amount'].toString(),
                             "${list.data[index]['quantity']} Kilo",
-                            ImagesRect[Random().nextInt(Images.length)],
+                            ImagesRect[Random().nextInt(ImagesRect.length)],
                             context,
-                            blank.routeName,
-                            list.data[index]['duedate'].toString(),height,width);
+                            list.data[index]['_id'].toString(),
+                            list.data[index]['vendor'].toString(),
+                            list.data[index]["status"]?"Your Sub is on HOLD":
+                            list.data[index]['duedate'].toString()
+                            ,height,width);
                       });
                 } else {
                   return Container(
@@ -118,7 +104,7 @@ width = MediaQuery.of(context).size.width;
   }
 }
 Widget subTile(String title, String interval, String prod, String price,
-    String unit, String image, BuildContext context, String Screen,String date , double height,double width) {
+    String unit, String image, BuildContext context, String subID ,String vendorID ,String date , double height,double width) {
   return Card(
     elevation: 5.0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -127,10 +113,16 @@ Widget subTile(String title, String interval, String prod, String price,
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              image,
-              height: height*0.156,
-              width: height*0.156,
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,top: 8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(25)),
+                child: Image.asset(
+                  image,
+                  height: height*0.143,
+                  width: height*0.143,
+                ),
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -205,8 +197,33 @@ Widget subTile(String title, String interval, String prod, String price,
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom:8.0,right:8.0,left: 8.0),
-          child: ScreenSizeButton("Tap to view more", context, Screen),
+          padding: const EdgeInsets.all(10),
+          child: Container(
+    width: double.infinity,
+    height: height*0.065,
+    child: TextButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => YourSubscriptionScreen(
+                                       ID: subID,
+                                       vendor_ID: vendorID,
+                                      ))
+          
+          );
+        },
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(AppColors.tileSelectGreen),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            )),
+        child: Text(
+          "Tap to view more",
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        )),
+  ),
         )
       ],
     ),

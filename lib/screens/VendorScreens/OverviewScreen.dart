@@ -24,27 +24,7 @@ class _OverviewScreenState extends State<OverviewScreen> {
 height = MediaQuery.of(context).size.height;
 width = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 13, right: 13, bottom: 5),
-        child: BottomNavBar(),
-      ),
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryGrey,
-        elevation: 0,
-        title: Text("Subscription App"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: AppColors.iconBlack,
-              ),
-              onPressed: () {
-               Navigator.pushNamed(context, AlertsScreen.routeName);
-              })
-        ],
-      ),
       body: ListView(
         padding: EdgeInsets.all(10),
         children: [

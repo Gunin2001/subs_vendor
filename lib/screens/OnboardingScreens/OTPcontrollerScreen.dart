@@ -3,11 +3,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/SignUpScreen.dart';
 
 import '../BlankTargetScreen.dart';
+import 'ResetPasswordScreen.dart';
 
 class OtpControllerScreen extends StatefulWidget {
   static String routeName = '/otpController';
@@ -42,17 +44,24 @@ class _OtpControllerScreenState extends State<OtpControllerScreen> {
     print('otp sent');
     print(widget.phone);
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: widget.codeDigits+ widget.phone,
+      phoneNumber: widget.codeDigits + widget.phone,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await FirebaseAuth.instance
             .signInWithCredential(credential)
             .then((value) {
-          if (value.user != null) {
+          if (value.user != null && screenNumber == 0) {
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
                       SignUpScreen(phone: widget.codeDigits + widget.phone)),
+            );
+          } else if (value.user != null && screenNumber == 1) {
+             Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      ResetPasswordScreen(phone:widget.phone)),
             );
           }
         });
@@ -79,8 +88,8 @@ class _OtpControllerScreenState extends State<OtpControllerScreen> {
 
   Widget build(BuildContext context) {
     double height, width;
-height = MediaQuery.of(context).size.height;
-width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -97,8 +106,8 @@ width = MediaQuery.of(context).size.width;
             padding: EdgeInsets.all(40),
             child: PinPut(
               fieldsCount: 6,
-              eachFieldHeight: height*0.052,
-              eachFieldWidth: width*0.1,
+              eachFieldHeight: height * 0.052,
+              eachFieldWidth: width * 0.1,
               focusNode: _pinOtpCodeFocus,
               controller: _pinOtpController,
               submittedFieldDecoration: pinOtpBoxDecoration,

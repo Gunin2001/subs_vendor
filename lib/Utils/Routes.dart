@@ -3,6 +3,7 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/screens/CommonScreens.dart/AlertsScreen.dart';
+import 'package:subs_vendor/screens/CommonScreens.dart/ProfileScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/AddSubScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/MySubscriptionsScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/SubSuccessScreen.dart';
@@ -12,6 +13,7 @@ import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/CustomSubscription.dart';
 import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
 import 'package:subs_vendor/screens/CommonScreens.dart/SettingsScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/ResetPasswordScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/LoginScreen.dart';
 import 'package:subs_vendor/screens/VendorScreens/MyCustomers.dart';
@@ -35,5 +37,6 @@ final Map<String, WidgetBuilder> routes = {
   OverviewScreen.routeName: (context) => OverviewScreen(),
   SubSuccess.routeName: (context) => SubSuccess(),
   MySubScreen.routeName: (context) => MySubScreen(),
+  DisplayProfile.routeName:(context) => DisplayProfile(),
   blank.routeName: (context) => blank(),
 };

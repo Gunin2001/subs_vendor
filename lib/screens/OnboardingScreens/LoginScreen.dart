@@ -11,6 +11,7 @@ import 'package:subs_vendor/screens/OnboardingScreens/ChooseTypeScreen.dart';
 import 'package:subs_vendor/screens/CustomerScreens/HomeScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/SignUpOtpScreen.dart';
 import 'package:subs_vendor/screens/VendorScreens/MyCustomers.dart';
+import 'package:subs_vendor/screens/VendorScreens/VendorHomeScreen.dart';
 import 'package:subs_vendor/shared_preferences/login_preferences.dart';
 import 'package:subs_vendor/shared_preferences/token_preferences.dart';
 import 'package:subs_vendor/shared_preferences/type_preference.dart';
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
     tokenPreference = TokenPreference();
     typePreference = TypePreference();
   }
+
   var isType;
   var type;
   getType() async {
@@ -42,14 +44,14 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       _isLoading = true;
     });
-    var response = await LoginApi.login(
-        usernameController.text, passwordController.text);
+    var response =
+        await LoginApi.login(usernameController.text, passwordController.text);
     if (response.statusCode == 200) {
       print(await tokenPreference.getTokenPreferenceData());
       loginPreference?.setLoginStatus(true);
       setState(() {
-        if(json.decode('"${response.data['data']['type']}"') == "vendor") {
-          Navigator.pushNamed(context, MyCustomerScreen.routeName);
+        if (json.decode('"${response.data['data']['type']}"') == "vendor") {
+          Navigator.pushNamed(context, VendorHomeScreen.routeName);
         } else {
           Navigator.pushNamed(context, HomeScreen.routeName);
         }
@@ -75,9 +77,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     double defaultFontSize = 14;
     double defaultIconSize = 17;
-     double height, width;
-  height = MediaQuery.of(context).size.height;
-  width = MediaQuery.of(context).size.width;
+    double height, width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
       body: Form(
@@ -85,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: EdgeInsets.all(20),
           children: <Widget>[
             SizedBox(
-              height: height*0.08,
+              height: height * 0.08,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -97,9 +99,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(height: height*0.04),
+                SizedBox(height: height * 0.04),
                 Container(
-                  height: height*0.065,
+                  height: height * 0.065,
                   child: TextField(
                     showCursor: true,
                     keyboardType: TextInputType.phone,
@@ -139,10 +141,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: height*0.015,
+                  height: height * 0.015,
                 ),
                 Container(
-                  height: height*0.065,
+                  height: height * 0.065,
                   child: TextField(
                     obscureText: true,
                     showCursor: true,
@@ -182,26 +184,32 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: height*0.006,
+                  height: height * 0.006,
                 ),
                 Container(
                   width: width,
-                  child: Text(
-                    "Forgot your password?",
-                    style: TextStyle(
-                      color: AppColors.tileSelectGreen,
-                      fontSize: defaultFontSize,
-                      fontStyle: FontStyle.normal,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, SignUpOtpScreen.routeName);
+                      screenNumber = 1;
+                    },
+                    child: Text(
+                      "Forgot your password?",
+                      style: TextStyle(
+                        color: AppColors.tileSelectGreen,
+                        fontSize: defaultFontSize,
+                        fontStyle: FontStyle.normal,
+                      ),
+                      textAlign: TextAlign.end,
                     ),
-                    textAlign: TextAlign.end,
                   ),
                 ),
                 SizedBox(
-                  height: height*0.052,
+                  height: height * 0.052,
                 ),
                 Container(
                   width: width,
-                  height: height*0.065,
+                  height: height * 0.065,
                   child: TextButton(
                       onPressed: () async {
                         await _onSubmit();
@@ -219,14 +227,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
-                                  height: height*0.04,
-                                  width: width*0.075,
+                                  height: height * 0.04,
+                                  width: width * 0.075,
                                   child: CircularProgressIndicator(
                                     color: Colors.white,
                                   ),
                                 ),
                                 SizedBox(
-                                  width: width*0.05,
+                                  width: width * 0.05,
                                 ),
                                 Text(
                                   "Please Wait...",
@@ -242,11 +250,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             )),
                 ),
                 SizedBox(
-                  height: height*0.013,
+                  height: height * 0.013,
                 ),
               ],
             ),
-            SizedBox(height: height*0.45),
+            SizedBox(height: height * 0.45),
             Align(
               alignment: Alignment.bottomCenter,
               child: Row(

@@ -4,12 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:subs_vendor/Utils/Constants.dart';
 import 'package:subs_vendor/screens/BlankTargetScreen.dart';
+import 'package:subs_vendor/screens/CommonScreens.dart/ReportBugScreen.dart';
 import 'package:subs_vendor/screens/OnboardingScreens/LoginScreen.dart';
+import 'package:subs_vendor/screens/OnboardingScreens/UserInfoScreen.dart';
 import 'package:subs_vendor/shared_preferences/login_preferences.dart';
 import 'package:subs_vendor/shared_preferences/token_preferences.dart';
 import 'package:subs_vendor/shared_preferences/type_preference.dart';
 import 'package:subs_vendor/widgets/Bottom_Navigation_Bar.dart';
 import 'package:subs_vendor/widgets/ScreenSizeButton.dart';
+
+import 'ProfileScreen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -27,10 +31,6 @@ height = MediaQuery.of(context).size.height;
 width = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.white,
-        bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 13, right: 13, bottom: 5),
-        child: BottomNavBar(),
-      ),
         floatingActionButtonLocation:
             FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
@@ -60,22 +60,6 @@ width = MediaQuery.of(context).size.width;
         )),
   ),
         ),
-        appBar: AppBar(
-          backgroundColor: AppColors.primaryGrey,
-          elevation: 0,
-          title: Text("Subscription App"),
-          centerTitle: true,
-          actions: [
-            IconButton(
-                icon: Icon(
-                  Icons.notifications_outlined,
-                  color: AppColors.iconBlack,
-                ),
-                onPressed: () {
-                  // do something
-                })
-          ],
-        ),
         body: ListView(
           physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.all(10),
@@ -83,7 +67,7 @@ width = MediaQuery.of(context).size.width;
             SizedBox(
               height: height*0.032,
             ),
-            settingCard("Profile", context, blank.routeName),
+            settingCard("Profile", context, DisplayProfile.routeName),
             SizedBox(
               height: height*0.013,
             ),
@@ -99,7 +83,7 @@ width = MediaQuery.of(context).size.width;
             SizedBox(
               height: height*0.013,
             ),
-            settingCard("Report a bug", context, blank.routeName),
+            settingCard("Report a bug", context, ReportBugScreen.routeName),
           ],
         ));
   }

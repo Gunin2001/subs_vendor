@@ -54,58 +54,43 @@ class _MyCustomerScreenState extends State<MyCustomerScreen> {
   @override
   Widget build(BuildContext context) {
     double height, width;
-height = MediaQuery.of(context).size.height;
-width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    width = MediaQuery.of(context).size.width;
     return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(left: 13, right: 13, bottom: 5),
-        child: BottomNavBar(),
-      ),
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.primaryGrey,
-        elevation: 0,
-        title: Text("Subscription App"),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.notifications_outlined,
-                color: AppColors.iconBlack,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, AlertsScreen.routeName);
-              })
-        ],
-      ),
       body: ListView(
         padding: EdgeInsets.all(15),
         children: [
-          SizedBox(height: height*0.032),
+          SizedBox(height: height * 0.032),
           Text(
             "Your Customers",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: height*0.013),
+          SizedBox(height: height * 0.013),
           FutureBuilder(
               future: fetchCustomers(),
               builder: (context, AsyncSnapshot list) {
                 if (list.data != null) {
-                  return ListView.builder(
+                  return list.data.length ==0 ?Text("No customers"):ListView.builder(
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
                       itemCount: list.data.length,
                       itemBuilder: (context, index) {
+                        print("In listview");
+                        print(list.data);
                         return customerTile(
-                            list.data[index]['customer_details'][0]['name'],
-                            list.data[index]['interval'],
-                            "Milk",
-                            list.data[index]['amount'].toString(),
-                            "Kilo",
-                            ImagesRect[Random().nextInt(Images.length)],
-                            context,
-                            list.data[index]['customer_details'][0]['address'],height,width);
+                                list.data[index]['customer_details'][0]['name'],
+                                list.data[index]['interval'].toString(),
+                                "Milk",
+                                list.data[index]['amount'].toString(),
+                                "Kilo",
+                                ImagesRect[Random().nextInt(ImagesRect.length)],
+                                context,
+                                list.data[index]['customer_details'][0]
+                                        ['address']
+                                    .toString(),
+                                height,
+                                width);
                       });
                 } else {
                   return Container(
@@ -123,28 +108,37 @@ width = MediaQuery.of(context).size.width;
   }
 }
 
-Widget customerTile(String title, String interval, String prod, String price,
-    String unit, String image, BuildContext context, String address, double height , double width) {
+Widget customerTile(
+    String title,
+    String interval,
+    String prod,
+    String price,
+    String unit,
+    String image,
+    BuildContext context,
+    String address,
+    double height,
+    double width) {
   return Card(
     elevation: 5.0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     child: Column(
       children: [
         SizedBox(
-          height: height*0.006,
+          height: height * 0.006,
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: width*0.012,
+              width: width * 0.012,
             ),
             ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               child: Image.asset(
                 image,
-                height: height*0.156,
-                width: width*0.3,
+                height: height * 0.156,
+                width: width * 0.3,
               ),
             ),
             Column(
@@ -190,8 +184,8 @@ Widget customerTile(String title, String interval, String prod, String price,
                           padding: const EdgeInsets.only(
                               right: 0.0, bottom: 4, top: 8, left: 8),
                           child: SizedBox(
-                            height: height*0.065,
-                            width: width*0.325,
+                            height: height * 0.065,
+                            width: width * 0.325,
                             child: AutoSizeText(address,
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 3,
@@ -204,7 +198,7 @@ Widget customerTile(String title, String interval, String prod, String price,
                       ],
                     ),
                     SizedBox(
-                      width: width*0.025,
+                      width: width * 0.025,
                     ),
                     Column(
                       children: [
@@ -218,7 +212,7 @@ Widget customerTile(String title, String interval, String prod, String price,
                         Center(
                           child: Text(unit),
                         ),
-                        SizedBox(height: height*0.04)
+                        SizedBox(height: height * 0.04)
                       ],
                     )
                   ],
